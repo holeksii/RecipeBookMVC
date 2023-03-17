@@ -21,10 +21,10 @@ services:
   mssql:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: mssql
-    hostname: ${DB_HOST}
+    hostname: mssql
     environment:
-      SA_PASSWORD: ${SA_PASSWORD}
+      SA_PASSWORD: <Type Here Your Password>
       ACCEPT_EULA: Y
     restart: unless-stopped
     ports:
-      - ${DB_PORT}:${DB_PORT}
+      - 1433:1433
