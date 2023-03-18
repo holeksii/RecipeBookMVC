@@ -8,8 +8,8 @@ services:
       dockerfile: Dockerfile
     depends_on: [ mssql ]
     ports:
-      - "8080:8080"
-      - "4040:4040"
+      - 8080:8080
+      - 4040:4040
     environment:
       ASPNETCORE_URLS: "https://+:8080;http://+:4040"
       ASPNETCORE_HTTPS_PORT: 8080
@@ -23,8 +23,8 @@ services:
     container_name: mssql
     hostname: mssql
     environment:
-      SA_PASSWORD: <Type Here Your Password>
+      SA_PASSWORD: Pass123!
       ACCEPT_EULA: Y
     restart: unless-stopped
     ports:
-      - 1433:1433
+      - 5000:5000
