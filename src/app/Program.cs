@@ -1,4 +1,18 @@
+using Microsoft.EntityFrameworkCore;
+using RecipeBookMVC.Models;
+
 var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<RecipeBookMVC.Data.DatabaseContext>(options =>
+        options.UseNpgsql(connectionString));
+
+// get db context
+var dbContext = builder.Services.BuildServiceProvider().GetService<RecipeBookMVC.Data.DatabaseContext>();
+
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
