@@ -1,5 +1,12 @@
 version: "3.4"
 
+networks:
+  dev:
+    driver: bridge
+
+volumes:
+  postgres:
+
 services:
   web:
     container_name: web
@@ -14,14 +21,26 @@ services:
       ASPNETCORE_URLS: "https://+:8080;http://+:4040"
       ASPNETCORE_HTTPS_PORT: 8080
       ASPNETCORE_ENVIRONMENT: "Development"
+      ConnectionStrings__DefaultConnection:
+        "User ID=postgres;Password=postgres;Server=postgres;Port=5432;Database=postgres;IntegratedSecurity=true;Pooling=true;"
     volumes:
       - ${APPDATA}\microsoft\UserSecrets:/root/.microsoft/usersecrets
       - ${USERPROFILE}\.aspnet\https:/root/.aspnet/https/
+    networks:
+      - dev
 
   postgres:
     image: postgres:15-alpine
     container_name: postgres
     ports:
-      - 5432:5432
-    env_file:
-      - db.env
+      - 5433:5432
+    restart: 
+      always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    networks:
+      - dev
