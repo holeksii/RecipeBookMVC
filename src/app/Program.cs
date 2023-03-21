@@ -1,6 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using RecipeBookMVC.Data;
-using RecipeBookMVC.Models;
 using Serilog;
 
 Log.Logger = new LoggerConfiguration().
