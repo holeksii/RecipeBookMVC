@@ -18,10 +18,8 @@ namespace RecipeBookMVC.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Category", x => x.Id);
-                });
+                constraints: table => table.PrimaryKey("PK_Category", x => x.Id)
+            );
 
             migrationBuilder.CreateTable(
                 name: "Users",
@@ -34,10 +32,8 @@ namespace RecipeBookMVC.Migrations
                     Password = table.Column<string>(type: "text", nullable: false),
                     ImageUrl = table.Column<string>(type: "text", nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Users", x => x.Id);
-                });
+                constraints: table => table.PrimaryKey("PK_Users", x => x.Id)
+                );
 
             migrationBuilder.CreateTable(
                 name: "Recipes",

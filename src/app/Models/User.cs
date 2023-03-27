@@ -29,7 +29,6 @@ public class User
 
     public List<Like> Likes { get; set; } = new();
 
-
     public List<Comment> Comments { get; set; } = new();
 
     public void AddRecipe(Recipe recipe)

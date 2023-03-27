@@ -9,8 +9,7 @@ public class Recipe
     [Key]
     public long Id { get; set; }
 
-    [Range(1, 1000, ErrorMessage = 
-        "The value must be between 1 and 1000")]
+    [Range(1, 1000, ErrorMessage = "The value must be between 1 and 1000")]
     public int TimeToCook { get; set; }
 
     [Required]
@@ -20,7 +19,7 @@ public class Recipe
     [Required]
     [MinLength(10)]
     public string Instructions { get; set; } = string.Empty;
-    
+
     [Url]
     public string? ImageUrl { get; set; }
 
@@ -37,7 +36,6 @@ public class Recipe
     public List<Like> Likes { get; set; } = new ();
 
     public List<Comment> Comments { get; set; } = new ();
-    
 
     public void AddIngredient(Ingredient ingredient)
     {

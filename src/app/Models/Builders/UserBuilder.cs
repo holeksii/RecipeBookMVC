@@ -2,7 +2,7 @@ namespace RecipeBookMVC.Models.Builders;
 
 public class UserBuilder : IBuilder<User>
 {
-    private User _user;
+    private readonly User _user;
 
     public UserBuilder()
     {

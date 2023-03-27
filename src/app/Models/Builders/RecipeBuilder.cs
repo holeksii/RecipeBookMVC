@@ -2,8 +2,8 @@ namespace RecipeBookMVC.Models.Builders;
 
 public class RecipeBuilder : IBuilder<Recipe>
 {
-    private Recipe _recipe;
-  
+    private readonly Recipe _recipe;
+
     public RecipeBuilder()
     {
         _recipe = new Recipe();
