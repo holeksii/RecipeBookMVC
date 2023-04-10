@@ -1,0 +1,29 @@
+﻿@model IEnumerable<RecipeBook.DAL.Models.Recipe>
+@{
+    ViewData["Title"] = "Recipes";
+}
+
+@foreach (var item in @Model)
+{
+    <div class="recipe">
+        <table>
+            <tbody>
+                <tr>
+                    <th>
+                        <img src=@item.ImageUrl alt="image" width="300">
+                    </th>
+                    <th>
+                        <p>@item.Category.Name</p>
+                        <h2>@item.Name</h2>
+                        <p>created by @item.User.Username</p>
+                    </th>
+                    <th>
+                        <button>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Recipes" asp-action="Recipe" asp-route-id="@item.Id">View details</a>
+                        </button>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+}
