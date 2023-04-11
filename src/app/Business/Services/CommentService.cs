@@ -14,6 +14,6 @@ public class CommentService : ICommentService
 
     public Comment AddComment(long userId, long recipeId, string commentText)
     {
-        return repository.Add(userId, recipeId, commentText);
+        return repository.Add(userId, recipeId, commentText)!;
     }
 }
