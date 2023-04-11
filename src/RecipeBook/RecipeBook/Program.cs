@@ -1,13 +1,11 @@
 using Microsoft.CodeAnalysis.Host.Mef;
 using Microsoft.EntityFrameworkCore;
 using RecipeBook.DAL.Data;
-using RecipeBook.DAL.Models;
 using RecipeBook.BLL.Repositories;
 using RecipeBook.BLL.Services;
 using Serilog;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using RecipeBook.DAL.Models.Builders;
 
 Log.Logger = new LoggerConfiguration().
     WriteTo.Console().
@@ -31,6 +29,10 @@ try
         new RecipeService(new RecipeRepository(dbContext)));
     builder.Services.AddSingleton<IUserService>(_ =>
         new UserService(new UserRepository(dbContext)));
+    builder.Services.AddSingleton<ICommentService>(_ =>
+        new CommentService(new CommentRepository(dbContext)));
+    builder.Services.AddSingleton<ILikeService>(_ =>
+        new LikeService(new LikeRepository(dbContext)));
 
     builder.Logging.ClearProviders();
     builder.Logging.AddConsole();

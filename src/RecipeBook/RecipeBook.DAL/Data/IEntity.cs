@@ -1,13 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RecipeBook.DAL.Data
+﻿namespace RecipeBook.DAL.Data;
+public interface IEntity
 {
-    public interface IEntity
-    {
-        long Id { get; set; }
-    }
+    long Id { get; set; }
 }
