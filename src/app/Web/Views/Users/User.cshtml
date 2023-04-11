@@ -1,9 +1,19 @@
-﻿@model RecipeBook.Data.Models.User
+@model User
 @{
     ViewData["Title"] = "User";
 }
-
 <h1>@Model.Username</h1>
+<div>
+<div class="inline">
+    <img src=@Model.ImageUrl alt="image here" width="300" />
+</div>
+<div class="inline">
+    <h3>Recipes: @Model.Recipes.Count</h3>
+    <h3>Recipes liked: @Model.Likes.Count</h3>
+    <h3>Comments: @Model.Comments.Count</h3>
+    <h3>Email: @Model.Email</h3>
+</div>
+</div>
 <button>
     <a class="nav-link text-dark" asp-area="" asp-controller="Recipes" asp-action="UserRecipes" asp-route-id="@Model.Id">View recipes created by this author</a>
 </button>
