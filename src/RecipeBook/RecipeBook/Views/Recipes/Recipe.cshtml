@@ -19,7 +19,7 @@
             <p>@Model.Comments.Count Comments</p>
         </div>
         <div class="inline">
-        @using (Html.BeginForm("AddComment", "Recipes", new { recipeId = Model.Id }))
+        @using (Html.BeginForm("AddLike", "Recipes", new { recipeId = Model.Id }))
         {
             <form asp-controller="Recipes" , asp-action="AddLike">
                 <input type="submit" value="Add like">
