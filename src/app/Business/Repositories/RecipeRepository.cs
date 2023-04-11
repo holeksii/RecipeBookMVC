@@ -28,7 +28,7 @@ public class RecipeRepository : EfCoreRepository<Recipe, DatabaseContext>
     public List<Recipe>? GetLikedRecipes(long id)
     {
         var idList = _context.Set<Like>().Include(l => l.User).Include(l => l.Recipe).
-            Where(l => l.User.Id == id).Select(l => l.Recipe.Id).ToList();
+            Where(l => l.User!.Id == id).Select(l => l.Recipe!.Id).ToList();
         return _context.Set<Recipe>().Where(r => idList.Contains(r.Id)).Include(r => r.Likes).
             Include(r => r.Category).Include(r => r.User).ToList();
     }
