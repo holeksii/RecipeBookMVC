@@ -1,7 +1,8 @@
 ﻿@model IEnumerable<RecipeBook.Data.Models.Recipe>
-    @{
+@{
     ViewData["Title"] = "Recipes";
-    }
+}
+
 @using (Html.BeginForm("AllRecipes", "Recipes",FormMethod.Get))
 {
     <div>
@@ -18,7 +19,7 @@
     </div>
 }
 
-    @foreach (var item in @Model)
+@foreach (var item in @Model)
 {
     <div class="recipe">
         <div class="inline">
