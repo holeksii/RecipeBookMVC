@@ -7,7 +7,8 @@ using Serilog;
 
 Log.Logger = new LoggerConfiguration().
     WriteTo.Console().
-    WriteTo.Seq("http://localhost:5341").CreateLogger();
+    WriteTo.Seq("http://localhost:5341").
+    CreateLogger();
 
 try
 {

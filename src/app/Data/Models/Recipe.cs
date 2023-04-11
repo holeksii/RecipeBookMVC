@@ -69,5 +69,5 @@ public class Recipe : IEntity
         Comments.Remove(comment);
     }
 
-    public static RecipeBuilder CreateBuilder() => new RecipeBuilder();
+    public static RecipeBuilder CreateBuilder() => new();
 }

@@ -22,6 +22,14 @@ public class DatabaseContext : DbContext
                 if (!databaseCreator.HasTables())
                 {
                     Database.Migrate();
+                    if (Users.CountAsync().Result == 0)
+                    {
+                        Users.Add(User.CreateBuilder()
+                            .SetUsername("admin")
+                            .SetPassword("Pa$$w0rd")
+                            .SetEmail("admin@admin.com")
+                            .Build());
+                    }
                 }
             }
         }

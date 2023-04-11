@@ -62,5 +62,5 @@ public class User : IEntity
         Comments.Remove(comment);
     }
 
-    public static UserBuilder CreateBuilder() => new UserBuilder();
+    public static UserBuilder CreateBuilder() => new();
 }

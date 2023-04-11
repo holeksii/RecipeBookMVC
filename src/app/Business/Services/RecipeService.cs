@@ -33,17 +33,14 @@ public class RecipeService : IRecipeService
         {
             return list;
         }
-        switch (field)
+
+        return field switch
         {
-            case "Likes":
-                return list.OrderByDescending(x => x.Likes.Count).ToList();
-            case "Comments":
-                return list.OrderByDescending(x => x.Comments.Count).ToList();
-            case "Time":
-                return list.OrderByDescending(x => x.TimeToCook).ToList();
-            default:
-                return list.OrderByDescending(x => x.Id).ToList();
-        }
+            "Likes" => list.OrderByDescending(x => x.Likes.Count).ToList(),
+            "Comments" => list.OrderByDescending(x => x.Comments.Count).ToList(),
+            "Time" => list.OrderByDescending(x => x.TimeToCook).ToList(),
+            _ => list.OrderByDescending(x => x.Id).ToList(),
+        };
     }
 
     public Recipe? GetRecipe(long id)
