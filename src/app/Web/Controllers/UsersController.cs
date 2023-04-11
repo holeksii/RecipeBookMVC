@@ -13,7 +13,8 @@ public class UsersController : Controller
     {
         _userService = userService;
         _logger = logger;
-        //hardcode as no registration written
+        // hardcode as no registration written
+        // TODO: remove hardcode
         currentId = 2;
     }
 
