@@ -78,9 +78,9 @@ public class RecipesController : Controller
         return View("Recipe", recipe);
     }
     [HttpPost]
-    public IActionResult AddLike(long recipeId)
+    public IActionResult AddOrDeleteLike(long recipeId)
     {
-        _likeService.AddLike(currentId, recipeId);
+        _likeService.AddOrDeleteLike(currentId, recipeId);
         var recipe = _recipeService.GetRecipe(recipeId);
         return View("Recipe", recipe);
     }

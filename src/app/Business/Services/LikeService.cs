@@ -12,8 +12,8 @@ public class LikeService : ILikeService
         repository = likeRepository;
     }
 
-    public Like? AddLike(long userId, long recipeId)
+    public void AddOrDeleteLike(long userId, long recipeId)
     {
-        return repository.Add(userId, recipeId);
+        repository.AddOrDelete(userId, recipeId);
     }
 }

@@ -1,4 +1,5 @@
-﻿using RecipeBook.Data.Context;
+﻿using Microsoft.EntityFrameworkCore;
+using RecipeBook.Data.Context;
 using RecipeBook.Data.Models;
 
 namespace RecipeBook.Business.Repositories;
@@ -12,25 +13,27 @@ public class LikeRepository : EfCoreRepository<Like, DatabaseContext>
         _context = context;
     }
 
-    public Like? Add(long userId, long recipeId)
+    public void AddOrDelete(long userId, long recipeId)
     {
         Recipe? recipe = _context.Find<Recipe>(recipeId);
         if (recipe != null)
         {
             User? user = _context.Find<User>(userId);
-            if (user != null)
+            if (user != null && userId != recipe.User.Id)
             {
-                Like? previous = _context.Set<Like>().FirstOrDefault(l => l.User!.Id == userId && l.Recipe!.Id == recipeId);
-                if (previous == null && userId != recipe.User?.Id)
+                Like? previous = _context.Set<Like>().Include(l => l.User).Include(l => l.Recipe).FirstOrDefault(l => l.User.Id == userId && l.Recipe.Id == recipeId);
+                if (previous == null)
                 {
-                    Like like = new (DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc));
+                    Like like = new Like(DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc));
                     user.Likes.Add(like);
                     recipe.Likes.Add(like);
-                    _context.SaveChanges();
-                    return like;
                 }
+                else
+                {
+                    _context.Remove(previous);
+                }
+                _context.SaveChanges();
             }
         }
-        return null;
     }
 }
