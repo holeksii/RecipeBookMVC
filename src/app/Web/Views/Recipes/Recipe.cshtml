@@ -30,7 +30,7 @@
         <h2>Ingredients:</h2>
         @foreach (var i in @Model.Ingredients)
         {
-            @if (i.Measure != null)
+            if (i.Measure != null)
             {
                 <div class="ingredient">
                     <p>@i.Quantity (@i.Measure) of @i.Name</p>

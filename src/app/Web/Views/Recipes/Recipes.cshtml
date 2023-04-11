@@ -1,27 +1,24 @@
 ﻿@model IEnumerable<RecipeBook.Data.Models.Recipe>
-@{
+    @{
     ViewData["Title"] = "Recipes";
-
-    IDictionary<string, string> parameters = new Dictionary<string, string>()
-{ { "sortingField", "" } };
-}
-<div>
-    <div class="inline">
+    }
+@using (Html.BeginForm("AllRecipes", "Recipes",FormMethod.Get))
+{
+    <div>
         <h3>Sort by:</h3>
-        <select name="sorting" asp-for="@parameters["sortingField"]">
-            <option value="Likes">Likes number</option>
-            <option value="Comments">Comments number</option>
-            <option value="Time">Time needed</option>
-        </select>
+        <form asp-controller="Recipes" , asp-action="AllRecipes">
+            <label for="fname">Likes number:</label>
+            <input type="checkbox" name="sortingField" value="Likes">
+            <label for="fname">Comments number:</label>
+            <input type="checkbox" name="sortingField" value="Comments">
+            <label for="fname">Time needed:</label>
+            <input type="checkbox" name="sortingField" value="Time">
+            <input type="submit" value="Sort">
+        </form>
     </div>
-</div>
+}
 
-<button>
-    <a class="nav-link text-dark" asp-area="" asp-controller="Recipes" asp-action="AllRecipes"
-        asp-all-route-data="@parameters">Use filter</a>
-</button>
-
-@foreach (var item in @Model)
+    @foreach (var item in @Model)
 {
     <div class="recipe">
         <div class="inline">
@@ -35,7 +32,7 @@
         <div class="inline">
             <button>
                 <a class="nav-link text-dark" asp-area="" asp-controller="Recipes" asp-action="Recipe"
-                    asp-route-id="@item.Id">View details</a>
+                   asp-route-id="@item.Id">View details</a>
             </button>
         </div>
     </div>
