@@ -11,6 +11,8 @@ public class RecipesController : Controller
     private readonly ICommentService _commentService;
     private readonly ILogger<RecipesController> _logger;
 
+    private readonly long currentId;
+
     public RecipesController(IRecipeService recipeService, ICommentService commentService,
         ILogger<RecipesController> logger, ILikeService likeService)
     {
@@ -18,6 +20,8 @@ public class RecipesController : Controller
         _commentService = commentService;
         _logger = logger;
         _likeService = likeService;
+        //hardcode as no registration written
+        currentId = 2;
     }
 
     [HttpGet]
@@ -31,6 +35,20 @@ public class RecipesController : Controller
     public IActionResult UserRecipes(long id, string sortingField = "")
     {
         var list = _recipeService.GetUserRecipes(id);
+        return View("UserRecipes", _recipeService.GetRecipesSortedBy(sortingField, list!));
+    }
+
+    [HttpGet]
+    public IActionResult MyRecipes(string sortingField = "")
+    {
+        var list = _recipeService.GetUserRecipes(currentId);
+        return View("UserRecipes", _recipeService.GetRecipesSortedBy(sortingField, list!));
+    }
+
+    [HttpGet]
+    public IActionResult LikedRecipes(string sortingField = "")
+    {
+        var list = _recipeService.GetLikedRecipes(currentId);
         return View("UserRecipes", _recipeService.GetRecipesSortedBy(sortingField, list!));
     }
 
@@ -49,22 +67,20 @@ public class RecipesController : Controller
     [HttpPost]
     public IActionResult AddRecipe(Recipe recipe)
     {
-        _recipeService.AddRecipe(2, recipe);
+        _recipeService.AddRecipe(currentId, recipe);
         return View("Recipe", recipe);
     }
-
     [HttpPost]
     public IActionResult AddComment(long recipeId, string comment)
     {
-        _commentService.AddComment(2L, recipeId, comment);
+        _commentService.AddComment(currentId, recipeId, comment);
         var recipe = _recipeService.GetRecipe(recipeId);
         return View("Recipe", recipe);
     }
-
     [HttpPost]
     public IActionResult AddLike(long recipeId)
     {
-        _likeService.AddLike(2L, recipeId);
+        _likeService.AddLike(currentId, recipeId);
         var recipe = _recipeService.GetRecipe(recipeId);
         return View("Recipe", recipe);
     }

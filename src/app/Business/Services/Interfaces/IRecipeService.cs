@@ -8,6 +8,8 @@ public interface IRecipeService
 
     public List<Recipe>? GetUserRecipes(long id);
 
+    public List<Recipe>? GetLikedRecipes(long id);
+
     public List<Recipe>? GetRecipesSortedBy(string field, List<Recipe> list);
 
     public Recipe? GetRecipe(long id);

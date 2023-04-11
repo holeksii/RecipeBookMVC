@@ -22,6 +22,11 @@ public class RecipeService : IRecipeService
         return repository.GetUserRecipes(id);
     }
 
+    public List<Recipe>? GetLikedRecipes(long id)
+    {
+        return repository.GetLikedRecipes(id);
+    }
+
     public List<Recipe>? GetRecipesSortedBy(string field, List<Recipe> list)
     {
         if (list == null)

@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Recipe>
+@{
+    ViewData["Title"] = "MyRecipes";
+}
+@using (Html.BeginForm("MyRecipes", "Recipes", FormMethod.Get))
+{
+    <div>
+        <h3>Sort by:</h3>
+        <form asp-controller="Recipes" , asp-action="MyRecipes">
+            <label for="fname">Likes number:</label>
+            <input type="checkbox" name="sortingField" value="Likes">
+            <label for="fname">Comments number:</label>
+            <input type="checkbox" name="sortingField" value="Comments">
+            <label for="fname">Time needed:</label>
+            <input type="checkbox" name="sortingField" value="Time">
+            <input type="submit" value="Sort">
+        </form>
+    </div>
+}
+
+@foreach (var item in @Model)
+{
+    <div class="recipe">
+        <div class="inline">
+            <img src=@item.ImageUrl alt="image" width="300">
+        </div>
+        <div class="inline">
+            <p>@item.Category.Name</p>
+            <h2>@item.Name</h2>
+            <p>created by @item.User.Username</p>
+        </div>
+        <div class="inline">
+            <button>
+                <a class="nav-link text-dark" asp-area="" asp-controller="Recipes" asp-action="Recipe" asp-route-id="@item.Id">View details</a>
+            </button>
+        </div>
+    </div>
+}
