@@ -66,9 +66,9 @@
         @foreach (var comment in @Model.Comments)
         {
             <div class="comment">
-                <h3>comment.User.Username</h3>
-                <p>comment.Text</p>
-                <time>comment.Time</time>
+                <h3>@comment.User.Username</h3>
+                <p>@comment.Text</p>
+                <time>@comment.Time</time>
             </div>
         }
     </div>
