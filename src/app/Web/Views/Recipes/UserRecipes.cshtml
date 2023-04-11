@@ -26,9 +26,9 @@
             <img src=@item.ImageUrl alt="image" width="300">
         </div>
         <div class="inline">
-            <p>@item.Category.Name</p>
+            <p>@item.Category?.Name</p>
             <h2>@item.Name</h2>
-            <p>created by @item.User.Username</p>
+            <p>created by @item.User?.Username</p>
         </div>
         <div class="inline">
             <button>

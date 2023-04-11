@@ -19,12 +19,12 @@ public class LikeRepository : EfCoreRepository<Like, DatabaseContext>
         if (recipe != null)
         {
             User? user = _context.Find<User>(userId);
-            if (user != null && userId != recipe.User.Id)
+            if (user != null && userId != recipe.User?.Id)
             {
-                Like? previous = _context.Set<Like>().Include(l => l.User).Include(l => l.Recipe).FirstOrDefault(l => l.User.Id == userId && l.Recipe.Id == recipeId);
+                Like? previous = _context.Set<Like>().Include(l => l.User).Include(l => l.Recipe).FirstOrDefault(l => l.User!.Id == userId && l.Recipe!.Id == recipeId);
                 if (previous == null)
                 {
-                    Like like = new Like(DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc));
+                    Like like = new (DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc));
                     user.Likes.Add(like);
                     recipe.Likes.Add(like);
                 }

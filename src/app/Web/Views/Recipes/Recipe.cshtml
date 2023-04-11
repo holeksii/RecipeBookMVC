@@ -8,12 +8,12 @@
         <img src=@Model.ImageUrl alt="image here" width="300" />
     </div>
     <div class="inline">
-        <h3>@Model.Category.Name</h3>
+        <h3>@Model.Category?.Name</h3>
         <p>@Model.TimeToCook minutes to cook</p>
-        <h3>Created by @Model.User.Username</h3>
+        <h3>Created by @Model.User?.Username</h3>
         <button>
             <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="UserInfo"
-                asp-route-id="@Model.User.Id">View details about author</a>
+                asp-route-id="@Model.User?.Id">View details about author</a>
         </button>
         <p>@Model.Likes.Count Likes</p>
         <p>@Model.Comments.Count Comments</p>
