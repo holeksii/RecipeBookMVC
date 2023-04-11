@@ -39,6 +39,12 @@ public class DatabaseContext : DbContext
         }
     }
 
+    public DatabaseContext()
+        : this(new DbContextOptionsBuilder<DatabaseContext>()
+            .Options)
+    {
+    }
+
     public DbSet<User> Users { get; set; } = default!;
 
     public DbSet<Recipe> Recipes { get; set; } = default!;
