@@ -70,6 +70,7 @@ public class RecipesController : Controller
         _recipeService.AddRecipe(currentId, recipe);
         return View("Recipe", recipe);
     }
+
     [HttpPost]
     public IActionResult AddComment(long recipeId, string comment)
     {
@@ -77,6 +78,7 @@ public class RecipesController : Controller
         var recipe = _recipeService.GetRecipe(recipeId);
         return View("Recipe", recipe);
     }
+
     [HttpPost]
     public IActionResult AddOrDeleteLike(long recipeId)
     {

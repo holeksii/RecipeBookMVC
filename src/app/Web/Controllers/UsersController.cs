@@ -16,6 +16,7 @@ public class UsersController : Controller
         //hardcode as no registration written
         currentId = 2;
     }
+
     [HttpGet("{id}")]
     public ActionResult UserInfo(long id)
     {
