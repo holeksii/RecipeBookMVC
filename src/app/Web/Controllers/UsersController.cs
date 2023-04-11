@@ -7,15 +7,11 @@ public class UsersController : Controller
 {
     private readonly IUserService _userService;
     private readonly ILogger<UsersController> _logger;
-    private readonly long currentId;
 
     public UsersController(IUserService userService, ILogger<UsersController> logger)
     {
         _userService = userService;
         _logger = logger;
-        // hardcode as no registration written
-        // TODO: remove hardcode
-        currentId = 2;
     }
 
     [HttpGet("{id}")]
