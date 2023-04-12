@@ -1,7 +1,6 @@
 ﻿namespace RecipeBook.Business.Services;
 
 using RecipeBook.Business.Repositories;
-using RecipeBook.Data.Models;
 
 public class LikeService : ILikeService
 {

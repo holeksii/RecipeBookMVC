@@ -13,19 +13,23 @@ public class RecipeRepository : EfCoreRepository<Recipe, DatabaseContext>
         _context = context;
     }
 
-    public override List<Recipe>? GetAll()
+    public RecipeRepository() : this(new DatabaseContext())
+    {
+    }
+
+    public new virtual List<Recipe>? GetAll()
     {
         return _context.Set<Recipe>().Include(r => r.Likes).
             Include(r => r.Category).Include(r => r.User).ToList();
     }
 
-    public List<Recipe>? GetUserRecipes(long id)
+    public virtual List<Recipe>? GetUserRecipes(long id)
     {
         return _context.Set<Recipe>().Where(r => r.User!.Id == id).Include(r => r.Likes).
             Include(r => r.Category).Include(r => r.User).ToList();
     }
 
-    public List<Recipe>? GetLikedRecipes(long id)
+    public virtual List<Recipe>? GetLikedRecipes(long id)
     {
         var idList = _context.Set<Like>().Include(l => l.User).Include(l => l.Recipe).
             Where(l => l.User!.Id == id).Select(l => l.Recipe!.Id).ToList();
@@ -33,14 +37,14 @@ public class RecipeRepository : EfCoreRepository<Recipe, DatabaseContext>
             Include(r => r.Category).Include(r => r.User).ToList();
     }
 
-    public override Recipe? Get(long id)
+    public new virtual Recipe? Get(long id)
     {
         return _context.Set<Recipe>().Include(r => r.Likes).
             Include(r => r.Category).Include(r => r.User).Include(r => r.Ingredients).
             Include(r => r.Comments).FirstOrDefault(r => r.Id == id);
     }
 
-    public Recipe? Add(long userId, Recipe recipe)
+    public virtual Recipe? Add(long userId, Recipe recipe)
     {
         var user = _context.Find<User>(userId);
         if (user == null)

@@ -8,15 +8,15 @@ using RecipeBook.Data.Models;
 public class CommentServiceTest
 {
     static readonly Mock<CommentRepository> commentRepositoryMock;
-    static readonly CommentRepository CommentRepository;
+    static readonly CommentRepository commentRepository;
     static readonly CommentService commentService;
 
     static CommentServiceTest()
     {
         commentRepositoryMock = new Mock<CommentRepository>();
         InitMockMethods();
-        CommentRepository = commentRepositoryMock.Object;
-        commentService = new CommentService(CommentRepository);
+        commentRepository = commentRepositoryMock.Object;
+        commentService = new (commentRepository);
     }
 
     static void InitMockMethods()

@@ -29,11 +29,6 @@ public class RecipeService : IRecipeService
 
     public List<Recipe>? GetRecipesSortedBy(string field, List<Recipe> list)
     {
-        if (list == null)
-        {
-            return list;
-        }
-
         return field switch
         {
             "Likes" => list.OrderByDescending(x => x.Likes.Count).ToList(),

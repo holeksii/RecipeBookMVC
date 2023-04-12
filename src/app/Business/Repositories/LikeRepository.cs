@@ -13,7 +13,11 @@ public class LikeRepository : EfCoreRepository<Like, DatabaseContext>
         _context = context;
     }
 
-    public void AddOrDelete(long userId, long recipeId)
+    public LikeRepository() : this(new DatabaseContext())
+    {
+    }
+
+    public virtual void AddOrDelete(long userId, long recipeId)
     {
         Recipe? recipe = _context.Find<Recipe>(recipeId);
         if (recipe != null)
