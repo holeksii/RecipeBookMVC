@@ -12,7 +12,12 @@ public class UserRepository : EfCoreRepository<User, DatabaseContext>
     {
         _context = context;
     }
-    public override User? Get(long id)
+
+    public UserRepository() : this(new DatabaseContext())
+    {
+    }
+
+    public virtual new User? Get(long id)
     {
         return _context.Set<User>().Include(u => u.Likes).Include(u => u.Recipes).
             Include(u => u.Comments).FirstOrDefault(u => u.Id == id);

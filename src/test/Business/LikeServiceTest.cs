@@ -5,31 +5,27 @@ using RecipeBook.Business.Repositories;
 using RecipeBook.Business.Services;
 using RecipeBook.Data.Models;
 
-// public class LikeServiceTest
-// {
-//     static readonly Mock<LikeRepository> likeRepositoryMock;
-//     static readonly LikeRepository likeRepository;
-//     static readonly LikeService likeService;
+public class LikeServiceTest
+{
+    static readonly Mock<LikeRepository> likeRepositoryMock;
+    static readonly LikeRepository likeRepository;
+    static readonly LikeService likeService;
 
-//     static LikeServiceTest()
-//     {
-//         likeRepositoryMock = new Mock<LikeRepository>();
-//         InitMockMethods();
-//         likeRepository = likeRepositoryMock.Object;
-//         likeService = new LikeService(likeRepository);
-//     }
+    static LikeServiceTest()
+    {
+        likeRepositoryMock = new Mock<LikeRepository>();
+        InitMockMethods();
+        likeRepository = likeRepositoryMock.Object;
+        likeService = new LikeService(likeRepository);
+    }
 
-//     static void InitMockMethods()
-//     {
-//         likeRepositoryMock.Setup(r =>
-//                 r.AddOrDelete(It.IsAny<long>(), It.IsAny<long>())).
-//     }
+    static void InitMockMethods()
+    {
+    }
 
-//     [Fact]
-//     public void TestAddComment()
-//     {
-//         var comment = likeService.AddComment(1, 1, "Test");
-//         Assert.Equal("Test", comment?.Text);
-//         Assert.Equal(DateTime.Today, comment?.Time);
-//     }
-// }
+    [Fact]
+    public void TestAddComment()
+    {
+        likeService.AddOrDeleteLike(1, 1);
+    }
+}

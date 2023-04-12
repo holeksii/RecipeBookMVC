@@ -1,6 +1,7 @@
 ﻿namespace RecipeBook.Web.Controllers;
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using RecipeBook.Business.Services;
 using RecipeBook.Data.Models;
 
