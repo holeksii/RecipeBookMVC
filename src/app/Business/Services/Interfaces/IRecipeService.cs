@@ -14,5 +14,5 @@ public interface IRecipeService
 
     public Recipe? GetRecipe(long id);
 
-    public Recipe AddRecipe(long userId, Recipe recipe);
+    public Recipe? AddRecipe(long userId, Recipe recipe);
 }

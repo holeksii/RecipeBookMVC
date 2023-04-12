@@ -40,10 +40,14 @@ public class RecipeRepository : EfCoreRepository<Recipe, DatabaseContext>
             Include(r => r.Comments).FirstOrDefault(r => r.Id == id);
     }
 
-    public Recipe Add(long userId, Recipe recipe)
+    public Recipe? Add(long userId, Recipe recipe)
     {
         var user = _context.Find<User>(userId);
-        user?.Recipes.Add(recipe);
+        if (user == null)
+        {
+            return null;
+        }
+        user.Recipes.Add(recipe);
         _context.SaveChanges();
         return recipe;
     }

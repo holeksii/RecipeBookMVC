@@ -48,9 +48,12 @@ public class RecipeService : IRecipeService
         return repository.Get(id);
     }
 
-    public Recipe AddRecipe(long userId, Recipe recipe)
+    public Recipe? AddRecipe(long userId, Recipe recipe)
     {
-        repository.Add(userId, recipe);
-        return recipe;
+        if (repository.Add(userId, recipe) != null)
+        {
+            return recipe;
+        }
+        return null;
     }
 }
