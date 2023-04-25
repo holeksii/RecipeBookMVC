@@ -1,6 +1,6 @@
-﻿using RecipeBook.DAL.Models;
+﻿using RecipeBook.Data.Models;
 
-namespace RecipeBook.BLL.Models;
+namespace RecipeBook.Business.Models;
 
 public class RecipeModel
 {

@@ -1,8 +1,8 @@
-﻿using RecipeBook.DAL.Models;
+﻿using RecipeBook.Data.Models;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace RecipeBook.BLL.Models;
+namespace RecipeBook.Business.Models;
 
 public class CommentModel
 {
@@ -20,5 +20,10 @@ public class CommentModel
     {
         Text = text;
         Time = time;
+    }
+
+    public static Comment mapCommentModel(CommentModel model)
+    {
+        return new Comment(model.Text, model.Time);
     }
 }

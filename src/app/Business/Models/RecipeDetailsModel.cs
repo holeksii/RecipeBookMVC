@@ -1,8 +1,8 @@
-﻿using RecipeBook.DAL.Models;
+﻿using RecipeBook.Data.Models;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace RecipeBook.BLL.Models;
+namespace RecipeBook.Business.Models;
 
 public class RecipeDetailsModel
 {

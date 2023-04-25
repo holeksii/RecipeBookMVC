@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using RecipeBook.DAL.Models;
+using RecipeBook.Data.Models;
 
-namespace RecipeBook.BLL.Models;
+namespace RecipeBook.Business.Models;
 
 public class CategoryModel
 {
@@ -16,9 +16,14 @@ public class CategoryModel
         Name = name;
     }
 
-    public CategoryModel(Category category)
+    public static CategoryModel mapCategory(Category category)
     {
-        Id = category.Id;
-        Name = category.Name;
+        CategoryModel model = new CategoryModel(category.Name);
+        model.Id = category.Id;
+        return model;
+    }
+    public static Category mapCategoryModel(CategoryModel model)
+    {
+        return new Category(model.Name);
     }
 }

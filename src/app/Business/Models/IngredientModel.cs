@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using RecipeBook.DAL.Models;
+using RecipeBook.Data.Models;
 
-namespace RecipeBook.BLL.Models;
+namespace RecipeBook.Business.Models;
 
 public class IngredientModel
 {
@@ -25,8 +25,8 @@ public class IngredientModel
         Measure = measure;
     }
 
-    public static Ingredient mapIngredientModel(IngeredientModel model)
+    public static Ingredient mapIngredientModel(IngredientModel model)
     {
-        return new Like(model.Time);
+        return new Ingredient(model.Name, model.Quantity, model.Measure);
     }
 }
