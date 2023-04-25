@@ -1,4 +1,4 @@
-﻿namespace RecipeBook.Business.Services;
+﻿namespace RecipeBook.Data.Services;
 
 using RecipeBook.Data.Models;
 

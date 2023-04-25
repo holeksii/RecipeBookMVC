@@ -1,25 +1,22 @@
 namespace RecipeBookTest.Business;
 
 using Moq;
-using RecipeBook.Business.Repositories;
-using RecipeBook.Business.Services;
-using RecipeBook.Data.Models;
+using RecipeBook.Data.Repositories;
+using RecipeBook.Data.Services;
 
-public class LikeServiceTest
+public sealed class LikeServiceTest
 {
-    static readonly Mock<LikeRepository> likeRepositoryMock;
-    static readonly LikeRepository likeRepository;
-    static readonly LikeService likeService;
+    readonly Mock<LikeRepository> likeRepositoryMock;
+    readonly LikeService likeService;
 
-    static LikeServiceTest()
+    public LikeServiceTest()
     {
         likeRepositoryMock = new Mock<LikeRepository>();
         InitMockMethods();
-        likeRepository = likeRepositoryMock.Object;
-        likeService = new LikeService(likeRepository);
+        likeService = new LikeService(likeRepositoryMock.Object);
     }
 
-    static void InitMockMethods()
+    void InitMockMethods()
     {
     }
 

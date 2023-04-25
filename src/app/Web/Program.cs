@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using RecipeBook.Data.Context;
-using RecipeBook.Business.Repositories;
-using RecipeBook.Business.Services;
+using RecipeBook.Data.Repositories;
+using RecipeBook.Data.Services;
 using Serilog;
 
 Log.Logger = new LoggerConfiguration().

@@ -1,30 +1,30 @@
 namespace RecipeBookTest.Business;
 
 using Moq;
-using RecipeBook.Business.Repositories;
-using RecipeBook.Business.Services;
+using RecipeBook.Data.Repositories;
+using RecipeBook.Data.Services;
 using RecipeBook.Data.Models;
 
-public class CommentServiceTest
+public sealed class CommentServiceTest
 {
-    static readonly Mock<CommentRepository> commentRepositoryMock;
-    static readonly CommentRepository commentRepository;
-    static readonly CommentService commentService;
+    readonly Mock<CommentRepository> commentRepositoryMock;
+    readonly CommentService commentService;
+    readonly DateTime startOfTime;
 
-    static CommentServiceTest()
+    public CommentServiceTest()
     {
         commentRepositoryMock = new Mock<CommentRepository>();
+        startOfTime = new DateTime(2021, 1, 1);
         InitMockMethods();
-        commentRepository = commentRepositoryMock.Object;
-        commentService = new (commentRepository);
+        commentService = new CommentService(commentRepositoryMock.Object);
     }
 
-    static void InitMockMethods()
+    void InitMockMethods()
     {
         commentRepositoryMock.Setup(r =>
                 r.Add(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<string>())).
             Returns(
-                new Comment("Test", DateTime.Today));
+                new Comment("Test", startOfTime));
     }
 
     [Fact]
@@ -32,6 +32,6 @@ public class CommentServiceTest
     {
         var comment = commentService.AddComment(1, 1, "Test");
         Assert.Equal("Test", comment?.Text);
-        Assert.Equal(DateTime.Today, comment?.Time);
+        Assert.Equal(startOfTime, comment?.Time);
     }
 }

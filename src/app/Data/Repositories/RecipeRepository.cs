@@ -2,7 +2,7 @@
 using RecipeBook.Data.Context;
 using Microsoft.EntityFrameworkCore;
 
-namespace RecipeBook.Business.Repositories;
+namespace RecipeBook.Data.Repositories;
 
 public class RecipeRepository : EfCoreRepository<Recipe, DatabaseContext>
 {

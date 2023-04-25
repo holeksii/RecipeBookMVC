@@ -1,6 +1,6 @@
 ﻿using RecipeBook.Data.Context;
 
-namespace RecipeBook.Business.Repositories;
+namespace RecipeBook.Data.Repositories;
 
 public interface IRepository<T> where T : class, IEntity
 {

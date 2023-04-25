@@ -2,7 +2,7 @@
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using RecipeBook.Business.Services;
+using Data.Services;
 using RecipeBook.Data.Models;
 
 public class RecipesController : Controller

@@ -1,6 +1,8 @@
-﻿namespace RecipeBook.Business.Services;
+﻿using RecipeBook.Data.Repositories;
 
-using RecipeBook.Business.Repositories;
+namespace RecipeBook.Data.Services;
+
+using Data.Repositories;
 using RecipeBook.Data.Models;
 
 public class RecipeService : IRecipeService

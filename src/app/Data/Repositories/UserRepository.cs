@@ -2,7 +2,7 @@
 using RecipeBook.Data.Context;
 using RecipeBook.Data.Models;
 
-namespace RecipeBook.Business.Repositories;
+namespace RecipeBook.Data.Repositories;
 
 public class UserRepository : EfCoreRepository<User, DatabaseContext>
 {

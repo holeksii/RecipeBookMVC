@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RecipeBook.Data.Context;
 
-namespace RecipeBook.Business.Repositories;
+namespace RecipeBook.Data.Repositories;
 
 public abstract class EfCoreRepository<TEntity, TContext> : IRepository<TEntity>
     where TEntity : class, IEntity

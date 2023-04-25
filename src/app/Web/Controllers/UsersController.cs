@@ -1,7 +1,7 @@
 ﻿namespace RecipeBook.Web.Controllers;
 
 using Microsoft.AspNetCore.Mvc;
-using RecipeBook.Business.Services;
+using Data.Services;
 
 public class UsersController : Controller
 {
