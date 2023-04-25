@@ -1,4 +1,4 @@
-namespace RecipeBook.Data.Models;
+namespace RecipeBook.BLL.Models;
 
 public class ErrorViewModel
 {
