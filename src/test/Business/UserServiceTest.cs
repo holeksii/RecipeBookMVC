@@ -2,8 +2,8 @@ namespace RecipeBookTest.Business;
 
 using Moq;
 using RecipeBook.Data.Repositories;
-using RecipeBook.Data.Services;
 using RecipeBook.Data.Models;
+using RecipeBook.Business.Services;
 
 public sealed class UserServiceTest
 {

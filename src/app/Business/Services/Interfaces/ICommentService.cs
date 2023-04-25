@@ -1,8 +1,8 @@
-﻿namespace RecipeBook.Data.Services;
+﻿namespace RecipeBook.Business.Services;
 
-using RecipeBook.Data.Models;
+using Data.Models;
 
 public interface ICommentService
 {
-    public Comment? AddComment(long userId, long recipeId, string commentText);
+    Comment? AddComment(long userId, long recipeId, string commentText);
 }

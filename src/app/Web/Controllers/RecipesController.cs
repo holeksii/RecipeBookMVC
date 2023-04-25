@@ -1,28 +1,25 @@
 ﻿namespace RecipeBook.Web.Controllers;
 
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Data.Services;
-using RecipeBook.Data.Models;
+using Business.Services;
+using Data.Models;
 
 public class RecipesController : Controller
 {
     private readonly IRecipeService _recipeService;
     private readonly ILikeService _likeService;
     private readonly ICommentService _commentService;
-    private readonly ILogger<RecipesController> _logger;
 
-    private readonly long currentId;
+    private readonly long _currentId;
 
     public RecipesController(IRecipeService recipeService, ICommentService commentService,
-        ILogger<RecipesController> logger, ILikeService likeService)
+        ILikeService likeService)
     {
         _recipeService = recipeService;
         _commentService = commentService;
-        _logger = logger;
         _likeService = likeService;
         //hardcode as no registration written
-        currentId = 2;
+        _currentId = 2;
     }
 
     [HttpGet]
@@ -32,7 +29,7 @@ public class RecipesController : Controller
         return View("Recipes", _recipeService.GetRecipesSortedBy(sortingField, list!));
     }
 
-    [HttpGet("UserRecipes/{id}")]
+    [HttpGet("UserRecipes/{id:long}")]
     public IActionResult UserRecipes(long id, string sortingField = "")
     {
         var list = _recipeService.GetUserRecipes(id);
@@ -42,18 +39,18 @@ public class RecipesController : Controller
     [HttpGet]
     public IActionResult MyRecipes(string sortingField = "")
     {
-        var list = _recipeService.GetUserRecipes(currentId);
+        var list = _recipeService.GetUserRecipes(_currentId);
         return View("UserRecipes", _recipeService.GetRecipesSortedBy(sortingField, list!));
     }
 
     [HttpGet]
     public IActionResult LikedRecipes(string sortingField = "")
     {
-        var list = _recipeService.GetLikedRecipes(currentId);
+        var list = _recipeService.GetLikedRecipes(_currentId);
         return View("UserRecipes", _recipeService.GetRecipesSortedBy(sortingField, list!));
     }
 
-    [HttpGet("Recipe/{id}")]
+    [HttpGet("Recipe/{id:long}")]
     public IActionResult Recipe(long id)
     {
         return View("Recipe", _recipeService.GetRecipe(id));
@@ -68,14 +65,14 @@ public class RecipesController : Controller
     [HttpPost]
     public IActionResult AddRecipe(Recipe recipe)
     {
-        _recipeService.AddRecipe(currentId, recipe);
+        _recipeService.AddRecipe(_currentId, recipe);
         return View("Recipe", recipe);
     }
 
     [HttpPost]
     public IActionResult AddComment(long recipeId, string comment)
     {
-        _commentService.AddComment(currentId, recipeId, comment);
+        _commentService.AddComment(_currentId, recipeId, comment);
         var recipe = _recipeService.GetRecipe(recipeId);
         return View("Recipe", recipe);
     }
@@ -83,7 +80,10 @@ public class RecipesController : Controller
     [HttpPost]
     public IActionResult AddOrDeleteLike(long recipeId)
     {
-        _likeService.AddOrDeleteLike(currentId, recipeId);
+        if (!_likeService.AddLike(_currentId, recipeId))
+        {
+            _likeService.DeleteLike(_currentId, recipeId);
+        }
         var recipe = _recipeService.GetRecipe(recipeId);
         return View("Recipe", recipe);
     }

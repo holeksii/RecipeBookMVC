@@ -1,8 +1,8 @@
-﻿namespace RecipeBook.Data.Services;
+﻿namespace RecipeBook.Business.Services;
 
-using RecipeBook.Data.Models;
+using Data.Models;
 
 public interface IUserService
 {
-    public User? GetUser(long id);
+    User? GetUser(long id);
 }

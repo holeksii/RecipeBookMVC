@@ -2,8 +2,8 @@ namespace RecipeBook.Data.Models;
 
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using RecipeBook.Data.Models.Builders;
-using RecipeBook.Data.Context;
+using Builders;
+using Context;
 
 public class Recipe : IEntity
 {

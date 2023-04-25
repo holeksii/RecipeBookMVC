@@ -1,8 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using RecipeBook.Data.Context;
-using RecipeBook.Data.Models;
+﻿namespace RecipeBook.Data.Repositories;
 
-namespace RecipeBook.Data.Repositories;
+using Microsoft.EntityFrameworkCore;
+using Context;
+using Models;
 
 public class UserRepository : EfCoreRepository<User, DatabaseContext>
 {
@@ -13,13 +13,12 @@ public class UserRepository : EfCoreRepository<User, DatabaseContext>
         _context = context;
     }
 
-    public UserRepository() : this(new DatabaseContext())
+    public new virtual User? Get(long id)
     {
-    }
-
-    public virtual new User? Get(long id)
-    {
-        return _context.Set<User>().Include(u => u.Likes).Include(u => u.Recipes).
-            Include(u => u.Comments).FirstOrDefault(u => u.Id == id);
+        return _context.Set<User>()
+            .Include(u => u.Likes)
+            .Include(u => u.Recipes)
+            .Include(u => u.Comments)
+            .FirstOrDefault(u => u.Id == id);
     }
 }

@@ -1,32 +1,30 @@
-﻿using RecipeBook.Data.Repositories;
-
-namespace RecipeBook.Data.Services;
+﻿namespace RecipeBook.Business.Services;
 
 using Data.Repositories;
-using RecipeBook.Data.Models;
+using Data.Models;
 
 public class RecipeService : IRecipeService
 {
-    private readonly RecipeRepository repository;
+    private readonly RecipeRepository _repository;
 
     public RecipeService(RecipeRepository recipeRepository)
     {
-        repository = recipeRepository;
+        _repository = recipeRepository;
     }
 
     public List<Recipe>? GetAllRecipes()
     {
-        return repository.GetAll();
+        return _repository.GetAll();
     }
 
     public List<Recipe>? GetUserRecipes(long id)
     {
-        return repository.GetUserRecipes(id);
+        return _repository.GetUserRecipes(id);
     }
 
     public List<Recipe>? GetLikedRecipes(long id)
     {
-        return repository.GetLikedRecipes(id);
+        return _repository.GetUserLikedRecipes(id);
     }
 
     public List<Recipe>? GetRecipesSortedBy(string field, List<Recipe> list)
@@ -42,15 +40,11 @@ public class RecipeService : IRecipeService
 
     public Recipe? GetRecipe(long id)
     {
-        return repository.Get(id);
+        return _repository.Get(id);
     }
 
     public Recipe? AddRecipe(long userId, Recipe recipe)
     {
-        if (repository.Add(userId, recipe) != null)
-        {
-            return recipe;
-        }
-        return null;
+        return _repository.Add(userId, recipe) is not null ? recipe : null;
     }
 }

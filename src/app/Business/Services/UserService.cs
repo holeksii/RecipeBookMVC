@@ -1,21 +1,19 @@
-﻿using RecipeBook.Data.Repositories;
-
-namespace RecipeBook.Data.Services;
+﻿namespace RecipeBook.Business.Services;
 
 using Data.Repositories;
-using RecipeBook.Data.Models;
+using Data.Models;
 
 public class UserService : IUserService
 {
-    private readonly UserRepository repository;
+    private readonly UserRepository _repository;
 
     public UserService(UserRepository userRepository)
     {
-        repository = userRepository;
+        _repository = userRepository;
     }
 
     public User? GetUser(long id)
     {
-        return repository.Get(id);
+        return _repository.Get(id);
     }
 }

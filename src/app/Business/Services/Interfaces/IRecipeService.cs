@@ -1,18 +1,18 @@
-﻿namespace RecipeBook.Data.Services;
+﻿namespace RecipeBook.Business.Services;
 
-using RecipeBook.Data.Models;
+using Data.Models;
 
 public interface IRecipeService
 {
-    public List<Recipe>? GetAllRecipes();
+    List<Recipe>? GetAllRecipes();
 
-    public List<Recipe>? GetUserRecipes(long id);
+    List<Recipe>? GetUserRecipes(long id);
 
-    public List<Recipe>? GetLikedRecipes(long id);
+    List<Recipe>? GetLikedRecipes(long id);
 
-    public List<Recipe>? GetRecipesSortedBy(string field, List<Recipe> list);
+    List<Recipe>? GetRecipesSortedBy(string field, List<Recipe> list);
 
-    public Recipe? GetRecipe(long id);
+    Recipe? GetRecipe(long id);
 
-    public Recipe? AddRecipe(long userId, Recipe recipe);
+    Recipe? AddRecipe(long userId, Recipe recipe);
 }

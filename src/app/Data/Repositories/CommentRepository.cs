@@ -1,7 +1,7 @@
-﻿using RecipeBook.Data.Context;
-using RecipeBook.Data.Models;
+﻿namespace RecipeBook.Data.Repositories;
 
-namespace RecipeBook.Data.Repositories;
+using Context;
+using Models;
 
 public class CommentRepository : EfCoreRepository<Comment, DatabaseContext>
 {
@@ -10,10 +10,6 @@ public class CommentRepository : EfCoreRepository<Comment, DatabaseContext>
     public CommentRepository(DatabaseContext context) : base(context)
     {
         _context = context;
-    }
-
-    public CommentRepository() : this(new DatabaseContext())
-    {
     }
 
     public virtual Comment? Add(long userId, long recipeId, string text)

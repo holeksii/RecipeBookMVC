@@ -1,20 +1,18 @@
 ﻿namespace RecipeBook.Web.Controllers;
 
 using Microsoft.AspNetCore.Mvc;
-using Data.Services;
+using Business.Services;
 
 public class UsersController : Controller
 {
     private readonly IUserService _userService;
-    private readonly ILogger<UsersController> _logger;
 
-    public UsersController(IUserService userService, ILogger<UsersController> logger)
+    public UsersController(IUserService userService)
     {
         _userService = userService;
-        _logger = logger;
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("{id:long}")]
     public ActionResult UserInfo(long id)
     {
         return View("User", _userService.GetUser(id));

@@ -1,7 +1,7 @@
 namespace RecipeBook.Data.Models;
 
 using System.ComponentModel.DataAnnotations;
-using RecipeBook.Data.Context;
+using Context;
 
 public class Category : IEntity
 {

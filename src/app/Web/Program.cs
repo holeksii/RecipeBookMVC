@@ -1,13 +1,11 @@
 using Microsoft.EntityFrameworkCore;
+using RecipeBook.Business.Services;
 using RecipeBook.Data.Context;
 using RecipeBook.Data.Repositories;
-using RecipeBook.Data.Services;
 using Serilog;
 
-Log.Logger = new LoggerConfiguration().
-    WriteTo.Console().
-    WriteTo.Seq("http://localhost:5341").
-    CreateLogger();
+Log.Logger = new LoggerConfiguration().WriteTo.Console().WriteTo.Seq("http://localhost:5341")
+    .CreateLogger();
 
 try
 {
@@ -24,14 +22,20 @@ try
         options.UseNpgsql(connectionString));
 
     var dbContext = builder.Services.BuildServiceProvider().GetService<DatabaseContext>();
+
+    var recipeRepository = new RecipeRepository(dbContext!);
+    var userRepository = new UserRepository(dbContext!);
+    var commentRepository = new CommentRepository(dbContext!);
+    var likeRepository = new LikeRepository(dbContext!);
+
     builder.Services.AddSingleton<IRecipeService>(_ =>
-        new RecipeService(new RecipeRepository(dbContext!)));
+        new RecipeService(recipeRepository));
     builder.Services.AddSingleton<IUserService>(_ =>
-        new UserService(new UserRepository(dbContext!)));
+        new UserService(userRepository));
     builder.Services.AddSingleton<ICommentService>(_ =>
-        new CommentService(new CommentRepository(dbContext!)));
+        new CommentService(commentRepository));
     builder.Services.AddSingleton<ILikeService>(_ =>
-        new LikeService(new LikeRepository(dbContext!)));
+        new LikeService(likeRepository, recipeRepository, userRepository));
 
     builder.Logging.ClearProviders();
     builder.Logging.AddConsole();

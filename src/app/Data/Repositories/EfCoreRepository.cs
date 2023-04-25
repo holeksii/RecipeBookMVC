@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using RecipeBook.Data.Context;
+﻿namespace RecipeBook.Data.Repositories;
 
-namespace RecipeBook.Data.Repositories;
+using Microsoft.EntityFrameworkCore;
+using Context;
 
 public abstract class EfCoreRepository<TEntity, TContext> : IRepository<TEntity>
     where TEntity : class, IEntity
@@ -14,7 +14,7 @@ public abstract class EfCoreRepository<TEntity, TContext> : IRepository<TEntity>
         _context = context;
     }
 
-    public TEntity Add(TEntity entity)
+    public TEntity? Add(TEntity entity)
     {
         _context.Set<TEntity>().Add(entity);
         _context.SaveChanges();
@@ -24,25 +24,27 @@ public abstract class EfCoreRepository<TEntity, TContext> : IRepository<TEntity>
     public TEntity? Delete(long id)
     {
         var entity = _context.Set<TEntity>().Find(id);
-        if (entity == null)
+        if (entity != null)
         {
-            _context.Set<TEntity>().Remove(entity!);
-            _context.SaveChanges();
+            return entity;
         }
+
+        _context.Set<TEntity>().Remove(entity!);
+        _context.SaveChanges();
         return entity;
     }
 
-    virtual public TEntity? Get(long id)
+    public virtual TEntity? Get(long id)
     {
         return _context.Set<TEntity>().Find(id);
     }
 
-    virtual public List<TEntity>? GetAll()
+    public virtual List<TEntity>? GetAll()
     {
         return _context.Set<TEntity>().ToList();
     }
 
-    public TEntity Update(TEntity entity)
+    public virtual TEntity? Update(TEntity entity)
     {
         _context.Entry(entity).State = EntityState.Modified;
         _context.SaveChanges();

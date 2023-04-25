@@ -1,6 +1,9 @@
-﻿namespace RecipeBook.Data.Services;
+﻿using RecipeBook.Data.Models;
+
+namespace RecipeBook.Business.Services;
 
 public interface ILikeService
 {
-    public void AddOrDeleteLike(long userId, long recipeId);
+    bool AddLike(long userId, long recipeId);
+    bool DeleteLike(long userId, long recipeId);
 }

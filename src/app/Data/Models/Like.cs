@@ -2,7 +2,7 @@ namespace RecipeBook.Data.Models;
 
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using RecipeBook.Data.Context;
+using Context;
 
 public class Like : IEntity
 {

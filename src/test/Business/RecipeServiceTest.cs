@@ -2,24 +2,24 @@ namespace RecipeBookTest.Business;
 
 using Moq;
 using RecipeBook.Data.Repositories;
-using RecipeBook.Data.Services;
 using RecipeBook.Data.Models;
+using RecipeBook.Business.Services;
 
 public sealed class RecipeServiceTest
 {
-    readonly Mock<RecipeRepository> recipeRepositoryMock;
-    readonly RecipeService recipeService;
+    readonly Mock<RecipeRepository> _recipeRepositoryMock;
+    readonly RecipeService _recipeService;
 
     public RecipeServiceTest()
     {
-        recipeRepositoryMock = new Mock<RecipeRepository>();
+        _recipeRepositoryMock = new Mock<RecipeRepository>();
         InitMockMethods();
-        recipeService = new(recipeRepositoryMock.Object);
+        _recipeService = new(_recipeRepositoryMock.Object);
     }
 
     void InitMockMethods()
     {
-        recipeRepositoryMock.Setup(r =>
+        _recipeRepositoryMock.Setup(r =>
                 r.GetAll()).Returns(
                     new List<Recipe>
                     {
@@ -29,7 +29,7 @@ public sealed class RecipeServiceTest
                     }
                 );
 
-        recipeRepositoryMock.Setup(r =>
+        _recipeRepositoryMock.Setup(r =>
                 r.GetUserRecipes(It.IsAny<long>())).Returns(
                     new List<Recipe>
                     {
@@ -38,20 +38,20 @@ public sealed class RecipeServiceTest
                     }
                 );
 
-        recipeRepositoryMock.Setup(r =>
-                r.GetLikedRecipes(It.IsAny<long>())).Returns(
+        _recipeRepositoryMock.Setup(r =>
+                r.GetUserLikedRecipes(It.IsAny<long>())).Returns(
                     new List<Recipe>
                     {
                         new Recipe { Name = "Recipe 1" },
                     }
                 );
 
-        recipeRepositoryMock.Setup(r =>
+        _recipeRepositoryMock.Setup(r =>
                 r.Get(It.IsAny<long>())).Returns(
                     new Recipe { Name = "Recipe 100", Instructions = "Instructions", TimeToCook = 10 }
                 );
 
-        recipeRepositoryMock.Setup(r =>
+        _recipeRepositoryMock.Setup(r =>
                 r.Add(It.IsAny<long>(), It.IsAny<Recipe>())).Returns(
                     new Recipe { Name = "1", Instructions = "1", TimeToCook = 1 }
                 );
@@ -60,28 +60,28 @@ public sealed class RecipeServiceTest
     [Fact]
     public void TestGetAllRecipes()
     {
-        var recipes = recipeService.GetAllRecipes();
+        var recipes = _recipeService.GetAllRecipes();
         Assert.Equal(3, recipes?.Count);
     }
 
     [Fact]
     public void TestGetUserRecipes()
     {
-        var recipes = recipeService.GetUserRecipes(1);
+        var recipes = _recipeService.GetUserRecipes(1);
         Assert.Equal(2, recipes?.Count);
     }
 
     [Fact]
     public void TestGetLikedRecipes()
     {
-        var recipes = recipeService.GetLikedRecipes(1);
+        var recipes = _recipeService.GetLikedRecipes(1);
         Assert.Equal(1, recipes?.Count);
     }
 
     [Fact]
     public void TestGetRecipesSortedBy()
     {
-        var recipes = recipeService.GetRecipesSortedBy("Likes", recipeService.GetAllRecipes()!);
+        var recipes = _recipeService.GetRecipesSortedBy("Likes", _recipeService.GetAllRecipes()!);
         Assert.Equal("Recipe 1", recipes?[0].Name);
         Assert.Equal("Recipe 3", recipes?[1].Name);
         Assert.Equal("Recipe 2", recipes?[2].Name);
@@ -90,7 +90,7 @@ public sealed class RecipeServiceTest
     [Fact]
     public void TestGetRecipe()
     {
-        var recipe = recipeService.GetRecipe(100);
+        var recipe = _recipeService.GetRecipe(100);
         Assert.Equal("Recipe 100", recipe?.Name);
         Assert.Equal("Instructions", recipe?.Instructions);
         Assert.Equal(10, recipe?.TimeToCook);
@@ -99,7 +99,7 @@ public sealed class RecipeServiceTest
     [Fact]
     public void TestAddRecipe()
     {
-        var recipe = recipeService.AddRecipe(1, new Recipe { Name = "1", Instructions = "1", TimeToCook = 1 });
+        var recipe = _recipeService.AddRecipe(1, new Recipe { Name = "1", Instructions = "1", TimeToCook = 1 });
         Assert.Equal("1", recipe?.Name);
         Assert.Equal("1", recipe?.Instructions);
         Assert.Equal(1, recipe?.TimeToCook);

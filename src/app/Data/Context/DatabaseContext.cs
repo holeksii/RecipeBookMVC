@@ -3,7 +3,7 @@ namespace RecipeBook.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
-using RecipeBook.Data.Models;
+using Models;
 
 public class DatabaseContext : DbContext
 {
@@ -12,25 +12,29 @@ public class DatabaseContext : DbContext
     {
         try
         {
-            if (Database.GetService<IDatabaseCreator>() is RelationalDatabaseCreator databaseCreator)
+            if (Database.GetService<IDatabaseCreator>() is not RelationalDatabaseCreator databaseCreator)
             {
-                if (!databaseCreator.CanConnect())
-                {
-                    databaseCreator.Create();
-                }
+                return;
+            }
 
-                if (!databaseCreator.HasTables())
-                {
-                    Database.Migrate();
-                    if (Users.CountAsync().Result == 0)
-                    {
-                        Users.Add(User.CreateBuilder()
-                            .SetUsername("admin")
-                            .SetPassword("Pa$$w0rd")
-                            .SetEmail("admin@admin.com")
-                            .Build());
-                    }
-                }
+            if (!databaseCreator.CanConnect())
+            {
+                databaseCreator.Create();
+            }
+
+            if (databaseCreator.HasTables())
+            {
+                return;
+            }
+
+            Database.Migrate();
+            if (Users.CountAsync().Result == 0)
+            {
+                Users.Add(User.CreateBuilder()
+                    .SetUsername("admin")
+                    .SetPassword("Pa$$w0rd")
+                    .SetEmail("admin@admin.com")
+                    .Build());
             }
         }
         catch (Exception e)

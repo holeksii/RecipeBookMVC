@@ -1,8 +1,8 @@
 namespace RecipeBook.Data.Models;
 
 using System.ComponentModel.DataAnnotations;
-using RecipeBook.Data.Models.Builders;
-using RecipeBook.Data.Context;
+using Builders;
+using Context;
 
 public class User : IEntity
 {
