@@ -25,7 +25,7 @@ public class LikeService : ILikeService
             return false;
         }
 
-        var now = DateTime.Now;
+        var now = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
         var user = _userRepository.Get(userId);
         var recipe = _recipeRepository.Get(recipeId);
 
