@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RecipeBook.Data.Models;
+using RecipeBook.Business.Models;
 using System.Diagnostics;
 
 namespace RecipeBook.Web.Controllers;
