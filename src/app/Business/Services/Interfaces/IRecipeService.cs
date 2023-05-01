@@ -1,18 +1,19 @@
 ﻿namespace RecipeBook.Business.Services;
 
 using Data.Models;
+using Business.Models;
 
 public interface IRecipeService
 {
-    List<Recipe>? GetAllRecipes();
+    List<RecipeDTO>? GetAllRecipes();
 
-    List<Recipe>? GetUserRecipes(long id);
+    List<RecipeDTO>? GetUserRecipes(long id);
 
-    List<Recipe>? GetLikedRecipes(long id);
+    List<RecipeDTO>? GetLikedRecipes(long id);
 
-    List<Recipe>? GetRecipesSortedBy(string field, List<Recipe> list);
+    List<RecipeDTO>? GetRecipesSortedBy(string field, List<RecipeDTO> list);
 
-    Recipe? GetRecipe(long id);
+    RecipeDetailsDTO? GetRecipe(long id);
 
-    Recipe? AddRecipe(long userId, Recipe recipe);
+    RecipeDetailsDTO? AddRecipe(long userId, RecipeDetailsDTO recipeDTO);
 }

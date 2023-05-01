@@ -1,4 +1,4 @@
-@model User
+@model UserDTO
 @{
     ViewData["Title"] = "User";
 }
@@ -8,9 +8,8 @@
     <img src=@Model.ImageUrl alt="image here" width="300" />
 </div>
 <div class="inline">
-    <h3>Recipes: @Model.Recipes.Count</h3>
-    <h3>Recipes liked: @Model.Likes.Count</h3>
-    <h3>Comments: @Model.Comments.Count</h3>
+    <h3>Recipes: @Model.RecipesCount</h3>
+    <h3>Comments: @Model.CommentsCount</h3>
     <h3>Email: @Model.Email</h3>
 </div>
 </div>

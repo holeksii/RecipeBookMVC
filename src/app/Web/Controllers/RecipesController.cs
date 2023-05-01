@@ -2,7 +2,7 @@
 
 using Microsoft.AspNetCore.Mvc;
 using Business.Services;
-using Data.Models;
+using Business.Models;
 
 public class RecipesController : Controller
 {
@@ -63,7 +63,7 @@ public class RecipesController : Controller
     }
 
     [HttpPost]
-    public IActionResult AddRecipe(Recipe recipe)
+    public IActionResult AddRecipe(RecipeDetailsDTO recipe)
     {
         _recipeService.AddRecipe(_currentId, recipe);
         return View("Recipe", recipe);

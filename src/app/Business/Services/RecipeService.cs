@@ -2,49 +2,85 @@
 
 using Data.Repositories;
 using Data.Models;
+using Business.Models;
+using AutoMapper;
 
 public class RecipeService : IRecipeService
 {
     private readonly RecipeRepository _repository;
+    private readonly Mapper _mapper;
 
     public RecipeService(RecipeRepository recipeRepository)
     {
         _repository = recipeRepository;
+        var configuration = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<Recipe, RecipeDetailsDTO>();
+                cfg.CreateMap<Recipe, RecipeDTO>().ConvertUsing(r => RecipeDTO.mapRecipe(r));
+                cfg.CreateMap<RecipeDetailsDTO, Recipe>();
+            });
+        _mapper = new Mapper(configuration);
     }
 
-    public List<Recipe>? GetAllRecipes()
+    public List<RecipeDTO>? GetAllRecipes()
     {
-        return _repository.GetAll();
+        var recipes = _repository.GetAll();
+        if (recipes != null)
+        {
+            return _mapper.Map<List<Recipe> ,List<RecipeDTO>>(recipes);
+        }
+        return null;
     }
 
-    public List<Recipe>? GetUserRecipes(long id)
+    public List<RecipeDTO>? GetUserRecipes(long id)
     {
-        return _repository.GetUserRecipes(id);
+        var recipes = _repository.GetUserRecipes(id);
+        if (recipes != null)
+        {
+            return _mapper.Map<List<Recipe>, List<RecipeDTO>>(recipes);
+        }
+        return null;
     }
 
-    public List<Recipe>? GetLikedRecipes(long id)
+    public List<RecipeDTO>? GetLikedRecipes(long id)
     {
-        return _repository.GetUserLikedRecipes(id);
+        var recipes = _repository.GetUserLikedRecipes(id);
+        if (recipes != null)
+        {
+            return _mapper.Map<List<Recipe>, List<RecipeDTO>>(recipes);
+        }
+        return null;
     }
 
-    public List<Recipe>? GetRecipesSortedBy(string field, List<Recipe> list)
+    public List<RecipeDTO>? GetRecipesSortedBy(string field, List<RecipeDTO> list)
     {
         return field switch
         {
-            "Likes" => list.OrderByDescending(x => x.Likes.Count).ToList(),
-            "Comments" => list.OrderByDescending(x => x.Comments.Count).ToList(),
+            "Likes" => list.OrderByDescending(x => x.LikesCount).ToList(),
+            "Comments" => list.OrderByDescending(x => x.CommentsCount).ToList(),
             "Time" => list.OrderByDescending(x => x.TimeToCook).ToList(),
             _ => list.OrderByDescending(x => x.Id).ToList(),
         };
     }
 
-    public Recipe? GetRecipe(long id)
+    public RecipeDetailsDTO? GetRecipe(long id)
     {
-        return _repository.Get(id);
+        var recipe = _repository.Get(id);
+        if (recipe != null)
+        {
+            return _mapper.Map<RecipeDetailsDTO>(recipe);
+        }
+        return null;
     }
 
-    public Recipe? AddRecipe(long userId, Recipe recipe)
+    public RecipeDetailsDTO? AddRecipe(long userId, RecipeDetailsDTO recipeDTO)
     {
-        return _repository.Add(userId, recipe) is not null ? recipe : null;
+        Recipe recipe = _mapper.Map<Recipe>(recipeDTO);
+        recipe = _repository.Add(userId, recipe);
+        if(recipe != null)
+        {
+            return _mapper.Map<RecipeDetailsDTO>(recipe);
+        }
+        return null;
     }
 }

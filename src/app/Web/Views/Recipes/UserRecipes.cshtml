@@ -1,4 +1,4 @@
-﻿@model IEnumerable<RecipeBook.Data.Models.Recipe>
+﻿@model IEnumerable<RecipeDTO>
 @{
     ViewData["Title"] = "UserRecipes";
 }
@@ -26,7 +26,7 @@
             <img src=@item.ImageUrl alt="image" width="300">
         </div>
         <div class="inline">
-            <p>@item.Category?.Name</p>
+            <p>@item.Category</p>
             <h2>@item.Name</h2>
             <p>created by @item.User?.Username</p>
         </div>

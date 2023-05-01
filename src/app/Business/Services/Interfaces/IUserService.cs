@@ -1,8 +1,8 @@
 ﻿namespace RecipeBook.Business.Services;
 
-using Data.Models;
+using Business.Models;
 
 public interface IUserService
 {
-    User? GetUser(long id);
+    UserDTO? GetUser(long id);
 }
