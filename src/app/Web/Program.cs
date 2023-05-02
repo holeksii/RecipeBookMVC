@@ -4,6 +4,7 @@ using RecipeBook.Data.Context;
 using RecipeBook.Data.Repositories;
 using Serilog;
 using Microsoft.AspNetCore.Identity;
+using Data.Repositories;
 
 Log.Logger = new LoggerConfiguration().WriteTo.Console().WriteTo.Seq("http://localhost:5341")
     .CreateLogger();
@@ -40,6 +41,8 @@ try
         new CommentService(commentRepository));
     builder.Services.AddSingleton<ILikeService>(_ =>
         new LikeService(likeRepository, recipeRepository, userRepository));
+
+    builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 
     builder.Logging.ClearProviders();
     builder.Logging.AddConsole();
