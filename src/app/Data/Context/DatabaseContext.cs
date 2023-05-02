@@ -1,11 +1,12 @@
 namespace RecipeBook.Data.Context;
 
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
 using Models;
 
-public class DatabaseContext : DbContext
+public class DatabaseContext : IdentityDbContext
 {
     public DatabaseContext(DbContextOptions<DatabaseContext> options)
         : base(options)
@@ -53,9 +54,10 @@ public class DatabaseContext : DbContext
 
     public DbSet<Recipe> Recipes { get; set; } = default!;
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    protected override void OnModelCreating(ModelBuilder builder)
     {
-        modelBuilder.Entity<User>()
+        base.OnModelCreating(builder);
+        builder.Entity<User>()
             .HasIndex(p => p.Username)
             .IsUnique(true);
     }

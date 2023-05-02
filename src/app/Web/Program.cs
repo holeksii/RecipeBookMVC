@@ -3,6 +3,7 @@ using RecipeBook.Business.Services;
 using RecipeBook.Data.Context;
 using RecipeBook.Data.Repositories;
 using Serilog;
+using Microsoft.AspNetCore.Identity;
 
 Log.Logger = new LoggerConfiguration().WriteTo.Console().WriteTo.Seq("http://localhost:5341")
     .CreateLogger();
@@ -20,6 +21,9 @@ try
 
     builder.Services.AddDbContext<DatabaseContext>(options =>
         options.UseNpgsql(connectionString));
+
+    builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+        .AddEntityFrameworkStores<DatabaseContext>();
 
     var dbContext = builder.Services.BuildServiceProvider().GetService<DatabaseContext>();
 
@@ -59,6 +63,8 @@ try
     app.UseStaticFiles();
 
     app.UseRouting();
+
+    app.UseAuthentication();
 
     app.UseAuthorization();
 

@@ -1,6 +1,87 @@
-﻿@model RecipeDetailsDTO
-@{
-    ViewData["Title"] = "CreateRecipe";
+﻿@model Web.DTOs.RecipeDto
+
+<h2>Create Recipe</h2>
+
+@using (Html.BeginForm("AddRecipe", "Recipes", FormMethod.Post))
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.Name)
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Name)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.TimeToCook)
+        @Html.TextBoxFor(m => m.TimeToCook, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.TimeToCook)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Instructions)
+        @Html.TextAreaFor(m => m.Instructions, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Instructions)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.ImageUrl)
+        @Html.TextBoxFor(m => m.ImageUrl, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.ImageUrl)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Category)
+        @Html.TextBoxFor(m => m.Category, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Category)
+    </div>
+
+@*    <div class="form-group">
+        @Html.LabelFor(m => m.UserId)
+        @Html.TextBoxFor(m => m.UserId, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.UserId)
+    </div>*@
+
+
+    <h4>Ingredients</h4>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Quantity</th>
+                        <th>Measure</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach: ingredients">
+                    @foreach (var item in Model.Ingredients)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Measure)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Measure)
+                        </td>
+                    </tr>
+                }
+                    <tr>
+                        <td>
+                            <a href="#" data-bind="click: $parent.removeIngredient">Remove</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <a href="#" data-bind="click: addIngredient">Add Ingredient</a>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Create</button>
+    </div>
 }
 
-<h2>Create New Recipe</h2>
+                       
