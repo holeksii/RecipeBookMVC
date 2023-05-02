@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
 using Models;
 
-public class DatabaseContext : IdentityDbContext
+public class DatabaseContext : IdentityDbContext<User>
 {
     public DatabaseContext(DbContextOptions<DatabaseContext> options)
         : base(options)
@@ -29,14 +29,6 @@ public class DatabaseContext : IdentityDbContext
             }
 
             Database.Migrate();
-            if (Users.CountAsync().Result == 0)
-            {
-                Users.Add(User.CreateBuilder()
-                    .SetUsername("admin")
-                    .SetPassword("Pa$$w0rd")
-                    .SetEmail("admin@admin.com")
-                    .Build());
-            }
         }
         catch (Exception e)
         {
@@ -58,7 +50,7 @@ public class DatabaseContext : IdentityDbContext
     {
         base.OnModelCreating(builder);
         builder.Entity<User>()
-            .HasIndex(p => p.Username)
+            .HasIndex(p => p.UserName)
             .IsUnique(true);
     }
 }

@@ -4,8 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Data.Models;
-using Data.Repositories;
+using RecipeBook.Data.Models;
+using RecipeBook.Data.Repositories;
 
 namespace Web.Controllers
 {

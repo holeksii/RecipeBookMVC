@@ -4,5 +4,5 @@ using Business.Models;
 
 public interface IUserService
 {
-    UserDTO? GetUser(long id);
+    UserDTO? GetUser(string id);
 }

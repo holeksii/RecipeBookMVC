@@ -7,13 +7,13 @@ public interface IRecipeService
 {
     List<RecipeDTO>? GetAllRecipes();
 
-    List<RecipeDTO>? GetUserRecipes(long id);
+    List<RecipeDTO>? GetUserRecipes(string id);
 
-    List<RecipeDTO>? GetLikedRecipes(long id);
+    List<RecipeDTO>? GetLikedRecipes(string id);
 
     List<RecipeDTO>? GetRecipesSortedBy(string field, List<RecipeDTO> list);
 
     RecipeDetailsDTO? GetRecipe(long id);
 
-    RecipeDetailsDTO? AddRecipe(long userId, RecipeDetailsDTO recipeDTO);
+    RecipeDetailsDTO? AddRecipe(string userId, RecipeDetailsDTO recipeDTO);
 }

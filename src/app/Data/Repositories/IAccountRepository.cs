@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
-using Data.Models;
+using RecipeBook.Data.Models;
 using Microsoft.AspNetCore.Identity;
 
-namespace Data.Repositories
+namespace RecipeBook.Data.Repositories
 {
     public interface IAccountRepository
     {

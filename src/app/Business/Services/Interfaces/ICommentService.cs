@@ -4,5 +4,5 @@ using Data.Models;
 
 public interface ICommentService
 {
-    Comment? AddComment(long userId, long recipeId, string commentText);
+    Comment? AddComment(string userId, long recipeId, string commentText);
 }

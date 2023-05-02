@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.Models
+namespace RecipeBook.Data.Models
 {
     public class SignUpUserModel
     {

@@ -12,8 +12,8 @@ public class UsersController : Controller
         _userService = userService;
     }
 
-    [HttpGet("{id:long}")]
-    public ActionResult UserInfo(long id)
+    [HttpGet("{id:string}")]
+    public ActionResult UserInfo(string id)
     {
         return View("User", _userService.GetUser(id));
     }

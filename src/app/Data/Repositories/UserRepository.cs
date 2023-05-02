@@ -13,7 +13,7 @@ public class UserRepository : EfCoreRepository<User, DatabaseContext>
         _context = context;
     }
 
-    public new virtual User? Get(long id)
+    public new virtual User? Get(string id)
     {
         return _context.Set<User>()
             .Include(u => u.Likes)

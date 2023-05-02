@@ -2,9 +2,9 @@ using Microsoft.EntityFrameworkCore;
 using RecipeBook.Business.Services;
 using RecipeBook.Data.Context;
 using RecipeBook.Data.Repositories;
+using RecipeBook.Data.Models;
 using Serilog;
 using Microsoft.AspNetCore.Identity;
-using Data.Repositories;
 
 Log.Logger = new LoggerConfiguration().WriteTo.Console().WriteTo.Seq("http://localhost:5341")
     .CreateLogger();
@@ -23,7 +23,7 @@ try
     builder.Services.AddDbContext<DatabaseContext>(options =>
         options.UseNpgsql(connectionString));
 
-    builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    builder.Services.AddIdentity<User, IdentityRole>()
         .AddEntityFrameworkStores<DatabaseContext>();
 
     var dbContext = builder.Services.BuildServiceProvider().GetService<DatabaseContext>();

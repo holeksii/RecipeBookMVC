@@ -11,7 +11,7 @@ public class RecipesController : Controller
     private readonly ILikeService _likeService;
     private readonly ICommentService _commentService;
 
-    private readonly long _currentId;
+    private readonly string _currentId;
 
     public RecipesController(IRecipeService recipeService, ICommentService commentService,
         ILikeService likeService)
@@ -20,7 +20,7 @@ public class RecipesController : Controller
         _commentService = commentService;
         _likeService = likeService;
         //hardcode as no registration written
-        _currentId = 2;
+        _currentId = "2";
     }
 
     [HttpGet]
@@ -30,8 +30,8 @@ public class RecipesController : Controller
         return View("Recipes", _recipeService.GetRecipesSortedBy(sortingField, list!));
     }
 
-    [HttpGet("UserRecipes/{id:long}")]
-    public IActionResult UserRecipes(long id, string sortingField = "")
+    [HttpGet("UserRecipes/{id:string}")]
+    public IActionResult UserRecipes(string id, string sortingField = "")
     {
         var list = _recipeService.GetUserRecipes(id);
         return View("UserRecipes", _recipeService.GetRecipesSortedBy(sortingField, list!));

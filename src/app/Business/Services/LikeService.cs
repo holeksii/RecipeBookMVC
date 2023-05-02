@@ -18,7 +18,7 @@ public class LikeService : ILikeService
         _userRepository = userRepository;
     }
 
-    public bool AddLike(long userId, long recipeId)
+    public bool AddLike(string userId, long recipeId)
     {
         if (_recipeRepository.GetUserLikedRecipes(userId).Any(r => r.Id == recipeId))
         {
@@ -41,7 +41,7 @@ public class LikeService : ILikeService
         return true;
     }
 
-    public bool DeleteLike(long userId, long recipeId)
+    public bool DeleteLike(string userId, long recipeId)
     {
         var like = _likeRepository.GetAll()
             ?.Find(l => l.User!.Id == userId && l.Recipe!.Id == recipeId);

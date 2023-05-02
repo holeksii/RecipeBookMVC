@@ -22,7 +22,7 @@ public class RecipeRepository : EfCoreRepository<Recipe, DatabaseContext>
             .ToList();
     }
 
-    public virtual List<Recipe>? GetUserRecipes(long userId)
+    public virtual List<Recipe>? GetUserRecipes(string userId)
     {
         return _context.Set<Recipe>()
             .Where(r => r.User!.Id == userId)
@@ -32,7 +32,7 @@ public class RecipeRepository : EfCoreRepository<Recipe, DatabaseContext>
             .ToList();
     }
 
-    public virtual List<Recipe> GetUserLikedRecipes(long userId)
+    public virtual List<Recipe> GetUserLikedRecipes(string userId)
     {
         var idList = _context.Set<Like>()
             .Include(l => l.User)
@@ -60,7 +60,7 @@ public class RecipeRepository : EfCoreRepository<Recipe, DatabaseContext>
             .FirstOrDefault(r => r.Id == id);
     }
 
-    public virtual Recipe? Add(long userId, Recipe recipe)
+    public virtual Recipe? Add(string userId, Recipe recipe)
     {
         var user = _context.Find<User>(userId);
         if (user == null)

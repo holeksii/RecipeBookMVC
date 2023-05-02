@@ -3,21 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Data.Models;
+using RecipeBook.Data.Models;
 using Microsoft.AspNetCore.Identity;
 
-namespace Data.Repositories
+namespace RecipeBook.Data.Repositories
 {
     public class AccountRepository : IAccountRepository
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        public AccountRepository(UserManager<IdentityUser> userMenager)
+        private readonly UserManager<User> _userManager;
+        public AccountRepository(UserManager<User> userMenager)
         {
             _userManager = userMenager;
         }
         public async Task<IdentityResult> CreateUserAsync(SignUpUserModel userModel)
         {
-            var user = new IdentityUser()
+            var user = new User()
             {
                 Email = userModel.Email,
                 UserName = userModel.Email,

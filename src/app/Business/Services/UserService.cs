@@ -17,7 +17,7 @@ public class UserService : IUserService
         _mapper = new Mapper(configuration);
     }
 
-    public UserDTO? GetUser(long id)
+    public UserDTO? GetUser(string id)
     {
         var user = _repository.Get(id);
         if (user != null)

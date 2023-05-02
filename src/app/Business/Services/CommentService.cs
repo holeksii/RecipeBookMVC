@@ -12,7 +12,7 @@ public class CommentService : ICommentService
         _repository = commentRepository;
     }
 
-    public Comment? AddComment(long userId, long recipeId, string commentText)
+    public Comment? AddComment(string userId, long recipeId, string commentText)
     {
         return _repository.Add(userId, recipeId, commentText);
     }
