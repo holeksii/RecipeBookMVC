@@ -30,7 +30,7 @@ public class RecipesController : Controller
         return View("Recipes", _recipeService.GetRecipesSortedBy(sortingField, list!));
     }
 
-    [HttpGet("UserRecipes/{id:string}")]
+    [HttpGet("UserRecipes/{id}")]
     public IActionResult UserRecipes(string id, string sortingField = "")
     {
         var list = _recipeService.GetUserRecipes(id);

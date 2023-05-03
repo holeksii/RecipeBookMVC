@@ -12,7 +12,7 @@ public class UsersController : Controller
         _userService = userService;
     }
 
-    [HttpGet("{id:string}")]
+    [HttpGet("{id}")]
     public ActionResult UserInfo(string id)
     {
         return View("User", _userService.GetUser(id));
