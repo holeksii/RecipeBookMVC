@@ -1,9 +1,22 @@
-﻿@model Web.DTOs.RecipeDto
+﻿@model RecipeDetailsDTO
 
 <h2>Create Recipe</h2>
+<h3>Select Category:</h3>
 
-@using (Html.BeginForm("AddRecipe", "Recipes", FormMethod.Post))
+@using (Html.BeginForm("AddNewCategory", "Recipes"))
 {
+    <form asp-controller="Recipes" , asp-action="AddNewCategory">
+        <label for="fname">No matching category in this list? Add your own:</label>
+        <input type="text" name="name" value="">
+        <input type="submit" value="Add category to list">
+    </form>
+}
+
+@using (Html.BeginForm("AddRecipe", "Recipes"))
+{
+    <div class="form-group">
+        @Html.DropDownListFor(m => m.CategoryId, new SelectList(ViewBag.Categories, "Id", "Name"), "Select Category", new { @id= "Category.Name", data_live_search = "true" })
+    </div>
     <div class="form-group">
         @Html.LabelFor(m => m.Name)
         @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
@@ -27,61 +40,7 @@
         @Html.TextBoxFor(m => m.ImageUrl, new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.ImageUrl)
     </div>
-
     <div class="form-group">
-        @Html.LabelFor(m => m.Category)
-        @Html.TextBoxFor(m => m.Category, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Category)
-    </div>
-
-@*    <div class="form-group">
-        @Html.LabelFor(m => m.UserId)
-        @Html.TextBoxFor(m => m.UserId, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.UserId)
-    </div>*@
-
-
-    <h4>Ingredients</h4>
-    <div class="row">
-        <div class="col-md-12">
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Quantity</th>
-                        <th>Measure</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody data-bind="foreach: ingredients">
-                    @foreach (var item in Model.Ingredients)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Measure)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Measure)
-                        </td>
-                    </tr>
-                }
-                    <tr>
-                        <td>
-                            <a href="#" data-bind="click: $parent.removeIngredient">Remove</a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <a href="#" data-bind="click: addIngredient">Add Ingredient</a>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <button type="submit" class="btn btn-primary">Create</button>
+        <button type="submit" class="btn btn-primary">Next</button>
     </div>
 }
-
-                       

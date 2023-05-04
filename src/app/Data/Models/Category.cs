@@ -12,6 +12,8 @@ public class Category : IEntity
     [MinLength(3)]
     public string Name { get; set; }
 
+    public List<Recipe> Recipes { get; set; } = new();
+
     public Category(string name)
     {
         Name = name;

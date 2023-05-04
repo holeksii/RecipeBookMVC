@@ -11,19 +11,10 @@ public class CategoryDTO
     [MinLength(3)]
     public string Name { get; set; }
 
+    public List<Recipe> Recipes { get; set; } = new();
+
     public CategoryDTO(string name)
     {
         Name = name;
-    }
-
-    public static CategoryDTO mapCategory(Category category)
-    {
-        CategoryDTO model = new CategoryDTO(category.Name);
-        model.Id = category.Id;
-        return model;
-    }
-    public static Category mapCategoryModel(CategoryDTO model)
-    {
-        return new Category(model.Name);
     }
 }

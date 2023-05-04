@@ -15,9 +15,9 @@ public class RecipeService : IRecipeService
         _repository = recipeRepository;
         var configuration = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<Recipe, RecipeDetailsDTO>();
+                cfg.CreateMap<Recipe, RecipeDetailsDTO>().ConstructUsing(r => RecipeDetailsDTO.mapRecipe(r));
                 cfg.CreateMap<Recipe, RecipeDTO>().ConvertUsing(r => RecipeDTO.mapRecipe(r));
-                cfg.CreateMap<RecipeDetailsDTO, Recipe>();
+                cfg.CreateMap<RecipeDetailsDTO, Recipe>().ConstructUsing(rdto => RecipeDetailsDTO.mapRecipeDetailsDTO(rdto));
             });
         _mapper = new Mapper(configuration);
     }
@@ -73,10 +73,10 @@ public class RecipeService : IRecipeService
         return null;
     }
 
-    public RecipeDetailsDTO? AddRecipe(string userId, RecipeDetailsDTO recipeDTO)
+    public RecipeDetailsDTO? AddRecipe(string userId, long categoryId, RecipeDetailsDTO recipeDTO)
     {
         Recipe recipe = _mapper.Map<Recipe>(recipeDTO);
-        recipe = _repository.Add(userId, recipe);
+        recipe = _repository.Add(userId, categoryId, recipe);
         if(recipe != null)
         {
             return _mapper.Map<RecipeDetailsDTO>(recipe);

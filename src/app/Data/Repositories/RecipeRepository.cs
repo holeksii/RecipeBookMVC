@@ -60,15 +60,20 @@ public class RecipeRepository : EfCoreRepository<Recipe, DatabaseContext>
             .FirstOrDefault(r => r.Id == id);
     }
 
-    public virtual Recipe? Add(string userId, Recipe recipe)
+    public virtual Recipe? Add(string userId, long categoryId, Recipe recipe)
     {
         var user = _context.Find<User>(userId);
         if (user == null)
         {
             return null;
         }
-
+        var category = _context.Find<Category>(categoryId);
+        if (category == null)
+        {
+            return null;
+        }
         user.Recipes.Add(recipe);
+        category.Recipes.Add(recipe);
         _context.SaveChanges();
         return recipe;
     }

@@ -30,17 +30,23 @@ try
 
     var recipeRepository = new RecipeRepository(dbContext!);
     var userRepository = new UserRepository(dbContext!);
+    var ingredientRepository = new IngredientRepository(dbContext!);
     var commentRepository = new CommentRepository(dbContext!);
     var likeRepository = new LikeRepository(dbContext!);
+    var categoryRepository = new CategoryRepository(dbContext!);
 
     builder.Services.AddSingleton<IRecipeService>(_ =>
         new RecipeService(recipeRepository));
     builder.Services.AddSingleton<IUserService>(_ =>
         new UserService(userRepository));
+    builder.Services.AddSingleton<IIngredientService>(_ =>
+        new IngredientService(ingredientRepository));
     builder.Services.AddSingleton<ICommentService>(_ =>
         new CommentService(commentRepository));
     builder.Services.AddSingleton<ILikeService>(_ =>
         new LikeService(likeRepository, recipeRepository, userRepository));
+    builder.Services.AddSingleton<ICategoryService>(_ =>
+        new CategoryService(categoryRepository));
 
     builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 

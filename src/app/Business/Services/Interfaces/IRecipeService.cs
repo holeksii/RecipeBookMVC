@@ -15,5 +15,5 @@ public interface IRecipeService
 
     RecipeDetailsDTO? GetRecipe(long id);
 
-    RecipeDetailsDTO? AddRecipe(string userId, RecipeDetailsDTO recipeDTO);
+    RecipeDetailsDTO? AddRecipe(string userId, long categoryId, RecipeDetailsDTO recipeDTO);
 }
