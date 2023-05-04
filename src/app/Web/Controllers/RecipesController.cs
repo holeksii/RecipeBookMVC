@@ -1,6 +1,5 @@
 ﻿namespace RecipeBook.Web.Controllers;
 
-using global::Web.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Business.Services;
 using Business.Models;

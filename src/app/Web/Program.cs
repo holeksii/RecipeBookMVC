@@ -48,7 +48,7 @@ try
     builder.Services.AddSingleton<ICategoryService>(_ =>
         new CategoryService(categoryRepository));
 
-    builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+    builder.Services.AddScoped<IAccountService, AccountService>();
 
     builder.Logging.ClearProviders();
     builder.Logging.AddConsole();

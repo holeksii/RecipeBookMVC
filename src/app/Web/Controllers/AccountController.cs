@@ -1,47 +1,43 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using RecipeBook.Data.Models;
-using RecipeBook.Data.Repositories;
+using RecipeBook.Business.Models;
+using RecipeBook.Business.Services;
 
-namespace Web.Controllers
+namespace Web.Controllers;
+
+public class AccountController : Controller
 {
-    public class AccountController : Controller
+    private readonly IAccountService _accountService;
+
+    public AccountController(IAccountService accountService)
     {
-        private readonly IAccountRepository _accountRepository;
+        _accountService = accountService;
+    }
 
-        public AccountController(IAccountRepository accountRepository)
-        {
-            _accountRepository = accountRepository;
-        }
+    [Route("signup")]
+    public IActionResult SignUp()
+    {
+        return View();
+    }
 
-        [Route("signup")]
-        public IActionResult SignUp()
+    [Route("signup")]
+    [HttpPost]
+    public async Task<IActionResult> SignUp(SignUpUserModel userModel)
+    {
+        if (ModelState.IsValid)
         {
-            return View();
-        }
-
-        [Route("signup")]
-        [HttpPost]
-        public async Task<IActionResult> SignUp(SignUpUserModel userModel)
-        {
-            if (ModelState.IsValid)
+            var result = await _accountService.CreateUserAsync(userModel);
+            if(!result.Succeeded)
             {
-                var result = await _accountRepository.CreateUserAsync(userModel);
-                if(result.Succeeded)
+                foreach(var errorMessage in result.Errors)
                 {
-                    foreach(var errorMessage in result.Errors)
-                    {
-                        ModelState.AddModelError("", errorMessage.Description);
-                    }
+                    ModelState.AddModelError("", errorMessage.Description);
                 }
-                ModelState.Clear();
             }
-
-            return View();
+            ModelState.Clear();
         }
+
+        return View("Success");
     }
 }

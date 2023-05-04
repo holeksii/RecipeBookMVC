@@ -1,4 +1,4 @@
-﻿@model RecipeBook.Data.Models.SignUpUserModel
+﻿@model SignUpUserModel
 
 @{
     Layout = null;
@@ -32,11 +32,11 @@
 </head>
 <body>
     <div class="containes">
-        <h4>SignUpUserModel</h4>
+        <h4>Sign Up</h4>
         <hr />
         <div class="row">
             <div class="col-md-4">
-                <form asp-action="SignUp">
+                <form asp-controller="Account" , asp-action="SignUp">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group">
                         <label asp-for="Email" class="control-label"></label>
@@ -61,7 +61,7 @@
         </div>
 
         <div>
-            <a asp-action="Index">Back to List</a>
+            <a asp-controller="Recipes" asp-action="AllRecipes">Back to List</a>
         </div>
     </div>
 </body>
