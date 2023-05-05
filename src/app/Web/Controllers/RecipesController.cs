@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Business.Services;
 using Business.Models;
 using Data.Models;
+using Microsoft.AspNetCore.Authorization;
 
 public class RecipesController : Controller
 {
@@ -41,6 +42,7 @@ public class RecipesController : Controller
         return View("UserRecipes", _recipeService.GetRecipesSortedBy(sortingField, list!));
     }
 
+    [Authorize]
     [HttpGet]
     public IActionResult MyRecipes(string sortingField = "")
     {
@@ -48,6 +50,7 @@ public class RecipesController : Controller
         return View("UserRecipes", _recipeService.GetRecipesSortedBy(sortingField, list!));
     }
 
+    [Authorize]
     [HttpGet]
     public IActionResult LikedRecipes(string sortingField = "")
     {
@@ -61,6 +64,7 @@ public class RecipesController : Controller
         return View("Recipe", _recipeService.GetRecipe(id));
     }
 
+    [Authorize]
     [HttpGet]
     public IActionResult CreateRecipe()
     {
@@ -70,6 +74,7 @@ public class RecipesController : Controller
         return View("CreateRecipe");
     }
 
+    [Authorize]
     [HttpPost]
     public IActionResult AddRecipe(RecipeDetailsDTO recipe)
     {
@@ -77,6 +82,7 @@ public class RecipesController : Controller
         return View("AddRecipeIngredients", newRecipe);
     }
 
+    [Authorize]
     [HttpPost]
     public IActionResult AddNewCategory(string name)
     {
@@ -85,6 +91,7 @@ public class RecipesController : Controller
         return View("CreateRecipe");
     }
 
+    [Authorize]
     [HttpGet]
     [HttpPost]
     public IActionResult AddIngredient(long recipeId, string name, int quantity, string measure = "")
@@ -94,6 +101,7 @@ public class RecipesController : Controller
         return View("AddRecipeIngredients", recipe);
     }
 
+    [Authorize]
     [HttpPost]
     public IActionResult AddComment(long recipeId, string comment)
     {
@@ -102,6 +110,7 @@ public class RecipesController : Controller
         return View("Recipe", recipe);
     }
 
+    [Authorize]
     [HttpPost]
     public IActionResult AddOrDeleteLike(long recipeId)
     {

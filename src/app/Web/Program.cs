@@ -50,6 +50,9 @@ try
 
     builder.Services.AddScoped<IAccountService, AccountService>();
 
+    builder.Services.ConfigureApplicationCookie( config  =>
+        config.LoginPath = "/login");
+
     builder.Logging.ClearProviders();
     builder.Logging.AddConsole();
 

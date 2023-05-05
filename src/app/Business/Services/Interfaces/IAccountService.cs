@@ -7,4 +7,8 @@ namespace RecipeBook.Business.Services;
 public interface IAccountService
 {
     Task<IdentityResult> CreateUserAsync(SignUpUserModel userModel);
+
+    Task<SignInResult> PasswordLoginAsync(LoginUserModel userModel);
+
+    Task LogoutAsync();
 }

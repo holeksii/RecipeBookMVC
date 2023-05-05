@@ -38,6 +38,36 @@ public class AccountController : Controller
             ModelState.Clear();
         }
 
-        return View("Success");
+        return RedirectToAction("Index", "Home");
+    }
+
+    [Route("login")]
+    public IActionResult Login()
+    {
+        return View();
+    }
+
+    [Route("login")]
+    [HttpPost]
+    public async Task<IActionResult> Login(LoginUserModel userModel)
+    {
+        if (ModelState.IsValid)
+        {
+            var result = await _accountService.PasswordLoginAsync(userModel);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            ModelState.AddModelError("", "invalid data");
+            return View(userModel);
+        }
+        return View();
+    }
+
+    [Route("logout")]
+    public async Task<IActionResult> Logout()
+    {
+        await _accountService.LogoutAsync();
+        return RedirectToAction("Index", "Home");
     }
 }
