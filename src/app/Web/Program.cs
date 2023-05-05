@@ -49,6 +49,7 @@ try
         new CategoryService(categoryRepository));
 
     builder.Services.AddScoped<IAccountService, AccountService>();
+    builder.Services.AddScoped<IContextService, ContextService>();
 
     builder.Services.ConfigureApplicationCookie( config  =>
         config.LoginPath = "/login");

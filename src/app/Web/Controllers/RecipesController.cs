@@ -5,6 +5,7 @@ using Business.Services;
 using Business.Models;
 using Data.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore;
 
 public class RecipesController : Controller
 {
@@ -13,19 +14,18 @@ public class RecipesController : Controller
     private readonly ICommentService _commentService;
     private readonly ICategoryService _categoryService;
     private readonly IIngredientService _ingredientService;
-
-    private readonly string _currentId;
+    private readonly IContextService _contextService;
 
     public RecipesController(IRecipeService recipeService, ICommentService commentService,
-        ILikeService likeService, ICategoryService categoryService, IIngredientService ingredientService)
+        ILikeService likeService, ICategoryService categoryService,
+        IIngredientService ingredientService, IContextService contextService)
     {
         _recipeService = recipeService;
         _commentService = commentService;
         _likeService = likeService;
         _categoryService = categoryService;
         _ingredientService = ingredientService;
-        //hardcode as no registration written
-        _currentId = "1e85b391-2a3b-4e4e-94c0-e4a7eea8abf7";
+        _contextService = contextService;
     }
 
     [HttpGet]
@@ -46,6 +46,7 @@ public class RecipesController : Controller
     [HttpGet]
     public IActionResult MyRecipes(string sortingField = "")
     {
+        string _currentId = _contextService.GetUserId();
         var list = _recipeService.GetUserRecipes(_currentId);
         return View("UserRecipes", _recipeService.GetRecipesSortedBy(sortingField, list!));
     }
@@ -54,6 +55,7 @@ public class RecipesController : Controller
     [HttpGet]
     public IActionResult LikedRecipes(string sortingField = "")
     {
+        string _currentId = _contextService.GetUserId();
         var list = _recipeService.GetLikedRecipes(_currentId);
         return View("UserRecipes", _recipeService.GetRecipesSortedBy(sortingField, list!));
     }
@@ -78,6 +80,7 @@ public class RecipesController : Controller
     [HttpPost]
     public IActionResult AddRecipe(RecipeDetailsDTO recipe)
     {
+        string _currentId = _contextService.GetUserId();
         var newRecipe = _recipeService.AddRecipe(_currentId, recipe.CategoryId, recipe);
         return View("AddRecipeIngredients", newRecipe);
     }
@@ -105,6 +108,7 @@ public class RecipesController : Controller
     [HttpPost]
     public IActionResult AddComment(long recipeId, string comment)
     {
+        string _currentId = _contextService.GetUserId();
         _commentService.AddComment(_currentId, recipeId, comment);
         var recipe = _recipeService.GetRecipe(recipeId);
         return View("Recipe", recipe);
@@ -114,6 +118,7 @@ public class RecipesController : Controller
     [HttpPost]
     public IActionResult AddOrDeleteLike(long recipeId)
     {
+        string _currentId = _contextService.GetUserId();
         if (!_likeService.AddLike(_currentId, recipeId))
         {
             _likeService.DeleteLike(_currentId, recipeId);
