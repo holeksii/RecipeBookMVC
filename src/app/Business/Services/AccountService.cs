@@ -27,7 +27,7 @@ public class AccountService : IAccountService
         var user = new User()
         {
             Email = userModel.Email,
-            UserName = userModel.Email,
+            UserName = userModel.UserName,
         };
         var result = await _userManager.CreateAsync(user, userModel.Password);
         if (result.Succeeded)
@@ -43,7 +43,7 @@ public class AccountService : IAccountService
 
     public async Task<SignInResult> PasswordLoginAsync(LoginUserModel userModel)
     {
-        return await _signInManager.PasswordSignInAsync(userModel.Email, userModel.Password, userModel.RememberMe, false);
+        return await _signInManager.PasswordSignInAsync(userModel.UserName, userModel.Password, userModel.RememberMe, false);
     }
 
     public async Task LogoutAsync()

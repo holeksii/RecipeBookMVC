@@ -4,9 +4,9 @@ namespace RecipeBook.Business.Models;
 
 public class LoginUserModel
 {
-    [Required(ErrorMessage = "Please, enter your email")]
-    [Display(Name = "Email address")]
-    public string Email { get; set; }
+    [Required(ErrorMessage = "Please, enter your username")]
+    [Display(Name = "User Name")]
+    public string UserName { get; set; }
 
     [Display(Name = "Password")]
     [DataType(DataType.Password)]

@@ -4,6 +4,10 @@ namespace RecipeBook.Business.Models;
 
 public class SignUpUserModel
 {
+    [Required(ErrorMessage = "Please, enter your username")]
+    [Display(Name = "UserName")]
+    public string UserName { get; set; }
+
     [Required(ErrorMessage = "Please, enter your email")]
     [Display(Name = "Email address")]
     [EmailAddress(ErrorMessage = "Please, enter a valid email")]
