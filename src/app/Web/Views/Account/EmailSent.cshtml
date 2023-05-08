@@ -1,0 +1,20 @@
+@{
+    ViewData["Title"] = "EmailSent";
+}
+
+<div class="container">
+    <div class="row text-center">
+        <div class="col-md-4">
+            @if (ViewBag.Success == true)
+            {
+            <div class="alert alert-success">
+                <p>We have sent you an email to verify your account. Please check it</p>
+            </div>
+            }
+            else
+            {
+            <p>Something went wrong</p>
+            }
+        </div>
+    </div>
+</div>

@@ -17,7 +17,7 @@ public class Ingredient : IEntity
     public int Quantity { get; set; }
 
     [RegularExpression("^(kg|g|l|ml|pcs)$")]
-    public string Measure { get; set; }
+    public string? Measure { get; set; }
 
     public Ingredient(string name, int quantity, string measure)
     {

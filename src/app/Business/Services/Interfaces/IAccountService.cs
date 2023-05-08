@@ -11,4 +11,6 @@ public interface IAccountService
     Task<SignInResult> PasswordLoginAsync(LoginUserModel userModel);
 
     Task LogoutAsync();
+
+    Task<IdentityResult> ConfirmEmailAsync(string uid, string token);
 }

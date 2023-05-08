@@ -28,17 +28,18 @@ public class AccountController : Controller
         if (ModelState.IsValid)
         {
             var result = await _accountService.CreateUserAsync(userModel);
-            if(!result.Succeeded)
+            if(result.Succeeded)
             {
-                foreach(var errorMessage in result.Errors)
-                {
-                    ModelState.AddModelError("", errorMessage.Description);
-                }
+                ViewBag.Success = true;
+                return View("EmailSent");
             }
-            ModelState.Clear();
+            foreach (var errorMessage in result.Errors)
+            {
+                ModelState.AddModelError("", errorMessage.Description);
+            }
         }
-
-        return RedirectToAction("Index", "Home");
+        ModelState.Clear();
+        return View(userModel);
     }
 
     [Route("login")]
@@ -60,6 +61,22 @@ public class AccountController : Controller
             }
             ModelState.AddModelError("", "invalid data");
             return View(userModel);
+        }
+        return View();
+    }
+
+    [Route("email-confirm")]
+    [HttpGet]
+    public async Task<IActionResult> ConfirmEmail(string uid, string token)
+    {
+        if(!string.IsNullOrEmpty(uid) && !string.IsNullOrEmpty(token))
+        {
+            token = token.Replace(' ', '+');
+            var result = await _accountService.ConfirmEmailAsync(uid, token);
+            if (result.Succeeded)
+            {
+                ViewBag.Success = true;
+            }
         }
         return View();
     }

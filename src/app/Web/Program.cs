@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using RecipeBook.Business.Services;
+using RecipeBook.Business.Models;
 using RecipeBook.Data.Context;
 using RecipeBook.Data.Repositories;
 using RecipeBook.Data.Models;
@@ -24,7 +25,7 @@ try
         options.UseNpgsql(connectionString));
 
     builder.Services.AddIdentity<User, IdentityRole>()
-        .AddEntityFrameworkStores<DatabaseContext>();
+        .AddEntityFrameworkStores<DatabaseContext>().AddDefaultTokenProviders();
 
     var dbContext = builder.Services.BuildServiceProvider().GetService<DatabaseContext>();
 
@@ -50,9 +51,15 @@ try
 
     builder.Services.AddScoped<IAccountService, AccountService>();
     builder.Services.AddScoped<IContextService, ContextService>();
+    builder.Services.AddScoped<IEmailService, EmailService>();
 
     builder.Services.ConfigureApplicationCookie( config  =>
-        config.LoginPath = "/login");
+        config.LoginPath = builder.Configuration["Application:LoginPath"]);
+
+    builder.Services.Configure<SMTPConfigModel>(builder.Configuration.GetSection("SMTPConfig"));
+
+    builder.Services.Configure<IdentityOptions>(options =>
+        options.SignIn.RequireConfirmedEmail = true);
 
     builder.Logging.ClearProviders();
     builder.Logging.AddConsole();

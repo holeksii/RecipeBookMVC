@@ -15,6 +15,6 @@ public class UsersController : Controller
     [HttpGet("{id}")]
     public ActionResult UserInfo(string id)
     {
-        return View("User", _userService.GetUser(id));
+        return View("UserInfo", _userService.GetUser(id));
     }
 }

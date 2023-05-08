@@ -226,7 +226,7 @@ namespace Data.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Quantity = table.Column<int>(type: "integer", nullable: false),
-                    Measure = table.Column<string>(type: "text", nullable: false),
+                    Measure = table.Column<string>(type: "text", nullable: true),
                     RecipeId = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
