@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Org.BouncyCastle.Bcpg;
 using RecipeBook.Business.Models;
 using RecipeBook.Business.Services;
 
@@ -79,6 +80,60 @@ public class AccountController : Controller
             }
         }
         return View();
+    }
+
+    [Route("forgot-password")]
+    [HttpGet]
+    public IActionResult ForgotPassword()
+    {
+        return View();
+    }
+
+    [Route("forgot-password")]
+    [HttpPost]
+    public async Task<IActionResult> ForgotPassword(ForgotPasswordModel forgotPasswordModel)
+    {
+        if (ModelState.IsValid)
+        {
+            await _accountService.SendForgotPasswordTokenAsync(forgotPasswordModel.Email);
+            ModelState.Clear();
+            ViewBag.EmailSent = true;
+        }
+        return View(forgotPasswordModel);
+    }
+
+    [Route("password-reset")]
+    [HttpGet]
+    public IActionResult ResetPassword(string uid, string token)
+    {
+        ResetPasswordModel model = new ResetPasswordModel
+        {
+            Token = token,
+            UserId = uid
+        };
+        return View(model);
+    }
+
+    [AllowAnonymous]
+    [Route("password-reset")]
+    [HttpPost]
+    public async Task<IActionResult> ResetPassword(ResetPasswordModel model)
+    {
+        if (ModelState.IsValid)
+        {
+            model.Token = model.Token.Replace(' ', '+');
+            var result = await _accountService.ResetPasswordAsync(model);
+            if (result.Succeeded)
+            {
+                model.IsSuccess = true;
+                return View(model);
+            }
+            foreach (var errorMessage in result.Errors)
+            {
+                ModelState.AddModelError("", errorMessage.Description);
+            }
+        }
+        return View(model);
     }
 
     [Route("logout")]

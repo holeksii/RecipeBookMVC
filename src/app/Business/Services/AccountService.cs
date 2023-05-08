@@ -35,7 +35,7 @@ public class AccountService : IAccountService
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             if(!string.IsNullOrEmpty(token))
             {
-                SendConfirmationEmail(user, token);
+                await SendConfirmationEmailAsync(user, token);
             }
         }
         return result;
@@ -51,7 +51,7 @@ public class AccountService : IAccountService
         await _signInManager.SignOutAsync();
     }
 
-    private void SendConfirmationEmail(User user, string token)
+    private async Task SendConfirmationEmailAsync(User user, string token)
     {
         string appDomain = _configuration.GetSection("Application:AppDomain").Value;
         string link = _configuration.GetSection("Application:EmailConfirmationPath").Value;
@@ -60,12 +60,44 @@ public class AccountService : IAccountService
             new KeyValuePair<string, string>("{{UserName}}",user.UserName),
             new KeyValuePair<string, string>("{{token}}", string.Format(appDomain + link, user.Id, token))
         };
-        _emailService.SendEmail("RecipeBook email confirmation", user.Email,
+        await _emailService.SendEmail("RecipeBook email confirmation", user.Email,
             "SignUpEmailTemplate", placeHolders);
     }
 
     public async Task<IdentityResult> ConfirmEmailAsync(string uid, string token)
     {
         return await _userManager.ConfirmEmailAsync(await _userManager.FindByIdAsync(uid), token);
+    }
+
+    private async Task SendResetPasswordEmailAsync(User user, string token)
+    {
+        string appDomain = _configuration.GetSection("Application:AppDomain").Value;
+        string link = _configuration.GetSection("Application:PasswordResetPath").Value;
+        var placeHolders = new List<KeyValuePair<string, string>>()
+        {
+            new KeyValuePair<string, string>("{{UserName}}",user.UserName),
+            new KeyValuePair<string, string>("{{token}}", string.Format(appDomain + link, user.Id, token))
+        };
+        await _emailService.SendEmail("RecipeBook password reset", user.Email,
+            "ForgotPasswordTemplate", placeHolders);
+    }
+
+    public async Task SendForgotPasswordTokenAsync(string email)
+    {
+        User user = await _userManager.FindByEmailAsync(email);
+        if (user != null)
+        {
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            if (!string.IsNullOrEmpty(token))
+            {
+                await SendResetPasswordEmailAsync(user, token);
+            }
+        }
+    }
+
+    public async Task<IdentityResult> ResetPasswordAsync(ResetPasswordModel model)
+    {
+        return await _userManager.ResetPasswordAsync(
+            await _userManager.FindByIdAsync(model.UserId), model.Token, model.NewPassword);
     }
 }

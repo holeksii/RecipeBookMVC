@@ -19,7 +19,7 @@ public class EmailService : IEmailService
         _templatePath = "..\\Business\\EmailTemplates\\{0}.html";
     }
 
-    public void SendEmail(string subject, string toEmail,
+    public async Task SendEmail(string subject, string toEmail,
         string templateName, List<KeyValuePair<string, string>> placeHolders)
     {
         string template = string.Format(_templatePath, templateName);
@@ -29,10 +29,10 @@ public class EmailService : IEmailService
             Body = UpdatePlaceHolders(GetEmailBody(template), placeHolders),
             ToEmail = toEmail
         };
-        SendEmail(emailOptions);
+        await SendEmail(emailOptions);
     }
 
-    private void SendEmail(EmailOptions emailOptions)
+    private async Task SendEmail(EmailOptions emailOptions)
     {
         var client = new SmtpClient(_smtpConfig.Host, _smtpConfig.Port)
         {

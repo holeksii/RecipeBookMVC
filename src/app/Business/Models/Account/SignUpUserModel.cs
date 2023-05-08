@@ -16,7 +16,7 @@ public class SignUpUserModel
     public string Password { get; set; }
 
     [Required(ErrorMessage = "Please, confirm password")]
-    [Display(Name = "Conform Password")]
+    [Display(Name = "Confirm Password")]
     [DataType(DataType.Password)]
     public string ConfirmPassword { get; set; }
 }

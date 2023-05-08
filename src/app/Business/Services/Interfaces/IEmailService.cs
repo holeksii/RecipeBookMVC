@@ -3,6 +3,6 @@ namespace RecipeBook.Business.Services;
 
 public interface IEmailService
 {
-    void SendEmail(string subject, string toEmail,
+    Task SendEmail(string subject, string toEmail,
         string templateName, List<KeyValuePair<string, string>> placeHolders);
 }
