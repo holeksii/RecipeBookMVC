@@ -24,7 +24,7 @@ public abstract class EfCoreRepository<TEntity, TContext> : IRepository<TEntity>
     public TEntity? Delete(long id)
     {
         var entity = _context.Set<TEntity>().Find(id);
-        if (entity != null)
+        if (entity == null)
         {
             return entity;
         }

@@ -43,8 +43,7 @@ public class LikeService : ILikeService
 
     public bool DeleteLike(string userId, long recipeId)
     {
-        var like = _likeRepository.GetAll()
-            ?.Find(l => l.User!.Id == userId && l.Recipe!.Id == recipeId);
+        var like = _likeRepository.GetPreviousLike(userId, recipeId);
         var recipe = _recipeRepository.Get(recipeId);
         if (like is null || recipe is null)
         {

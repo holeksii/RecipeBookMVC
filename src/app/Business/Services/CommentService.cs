@@ -14,6 +14,7 @@ public class CommentService : ICommentService
 
     public Comment? AddComment(string userId, long recipeId, string commentText)
     {
-        return _repository.Add(userId, recipeId, commentText);
+        Comment comment = new(commentText, DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc));
+        return _repository.Add(userId, recipeId, comment);
     }
 }

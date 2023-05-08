@@ -12,7 +12,7 @@ public class CommentRepository : EfCoreRepository<Comment, DatabaseContext>
         _context = context;
     }
 
-    public virtual Comment? Add(string userId, long recipeId, string text)
+    public virtual Comment? Add(string userId, long recipeId, Comment comment)
     {
         var recipe = _context.Find<Recipe>(recipeId);
         if (recipe == null)
@@ -26,7 +26,6 @@ public class CommentRepository : EfCoreRepository<Comment, DatabaseContext>
             return null;
         }
 
-        Comment comment = new (text, DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc));
         user.Comments.Add(comment);
         recipe.Comments.Add(comment);
         _context.SaveChanges();

@@ -15,5 +15,7 @@ public interface IRecipeService
 
     RecipeDetailsDTO? GetRecipe(long id);
 
+    void DeleteRecipe(long id);
+
     RecipeDetailsDTO? AddRecipe(string userId, long categoryId, RecipeDetailsDTO recipeDTO);
 }

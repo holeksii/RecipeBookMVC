@@ -34,6 +34,12 @@
             <button>
                 <a class="nav-link text-dark" asp-area="" asp-controller="Recipes" asp-action="Recipe" asp-route-id="@item.Id">View details</a>
             </button>
+            @using (Html.BeginForm("DeleteRecipe", "Recipes", new { recipeId = @item.Id }))
+            {
+                <form asp-controller="Recipes" , asp-action="DeleteRecipe">
+                    <input type="submit" value="Delete">
+                </form>
+            }
         </div>
     </div>
 }

@@ -73,6 +73,11 @@ public class RecipeService : IRecipeService
         return null;
     }
 
+    public void DeleteRecipe(long id)
+    {
+        _repository.Delete(id);
+    }
+
     public RecipeDetailsDTO? AddRecipe(string userId, long categoryId, RecipeDetailsDTO recipeDTO)
     {
         Recipe recipe = _mapper.Map<Recipe>(recipeDTO);

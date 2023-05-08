@@ -48,7 +48,7 @@ public class RecipesController : Controller
     {
         string _currentId = _contextService.GetUserId();
         var list = _recipeService.GetUserRecipes(_currentId);
-        return View("UserRecipes", _recipeService.GetRecipesSortedBy(sortingField, list!));
+        return View("MyRecipes", _recipeService.GetRecipesSortedBy(sortingField, list!));
     }
 
     [Authorize]
@@ -64,6 +64,15 @@ public class RecipesController : Controller
     public IActionResult Recipe(long id)
     {
         return View("Recipe", _recipeService.GetRecipe(id));
+    }
+
+    [Authorize]
+    public IActionResult DeleteRecipe(long recipeId)
+    {
+        _recipeService.DeleteRecipe(recipeId);
+        string _currentId = _contextService.GetUserId();
+        var list = _recipeService.GetUserRecipes(_currentId);
+        return View("MyRecipes", list);
     }
 
     [Authorize]
