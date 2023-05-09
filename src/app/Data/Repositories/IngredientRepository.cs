@@ -11,6 +11,7 @@ public class IngredientRepository : EfCoreRepository<Ingredient, DatabaseContext
 	{
 		_context = context;
 	}
+
 	public virtual Ingredient? Add(long recipeId, Ingredient ingredient)
 	{
 		var recipe = _context.Find<Recipe>(recipeId);

@@ -34,6 +34,11 @@ public class LikeService : ILikeService
             return false;
         }
 
+        if (user.Id  == recipe.User!.Id)
+        {
+            return false;
+        }
+
         var like = new Like(now) { User = user, Recipe = recipe };
 
         _recipeRepository.Update(recipe);

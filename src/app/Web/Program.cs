@@ -7,14 +7,13 @@ using RecipeBook.Data.Models;
 using Serilog;
 using Microsoft.AspNetCore.Identity;
 
-Log.Logger = new LoggerConfiguration().WriteTo.Console().WriteTo.Seq("http://localhost:5341")
-    .CreateLogger();
-
 try
 {
-    Log.Information("Starting");
-
     var builder = WebApplication.CreateBuilder(args);
+
+    Log.Logger = new LoggerConfiguration().WriteTo.Console()
+        .WriteTo.Seq(builder.Configuration["Logging:Serilog:Seq"]).CreateLogger();
+    Log.Information("Starting");
 
     builder.Host.UseSerilog();
 

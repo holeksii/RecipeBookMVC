@@ -24,9 +24,4 @@ public class IngredientDTO
         Quantity = quantity;
         Measure = measure;
     }
-
-    public static Ingredient mapIngredientModel(IngredientDTO model)
-    {
-        return new Ingredient(model.Name, model.Quantity, model.Measure);
-    }
 }

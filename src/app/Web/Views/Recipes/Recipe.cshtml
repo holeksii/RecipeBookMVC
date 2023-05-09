@@ -5,6 +5,22 @@
 
 <div class="recipe">
     <h1>@Model.Name</h1>
+    @if (ViewBag.LikeAdded == true)
+    {
+    <div class="col-md-4">
+        <div class="alert alert-success">
+            <p>Your like was successfully added</p>
+        </div>
+    </div>
+    }
+    @if (ViewBag.LikeDeleted == true)
+    {
+    <div class="col-md-4">
+        <div class="alert alert-danger">
+            <p>Your like was successfully deleted</p>
+        </div>
+    </div>
+    }
     <div class="inline">
         <img src=@Model.ImageUrl alt="image here" width="300" />
     </div>
@@ -12,9 +28,9 @@
         <h3>@Model.Category?.Name</h3>
         <p>@Model.TimeToCook minutes to cook</p>
         <h3>Created by @Model.User?.UserName</h3>
-        <button>
+        <button class="view-btn">
             <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="UserInfo"
-                asp-route-id="@Model.User?.Id">View details about author</a>
+               asp-route-id="@Model.User?.Id">View details about author</a>
         </button>
         <p>@Model.Likes.Count Likes</p>
         <p>@Model.Comments.Count Comments</p>
@@ -22,9 +38,9 @@
     <div class="inline">
         @using (Html.BeginForm("AddOrDeleteLike", "Recipes", new { recipeId = Model.Id }))
         {
-            <form asp-controller="Recipes" , asp-action="AddOrDeleteLike">
-                <input type="submit" value="Like">
-            </form>
+        <form asp-controller="Recipes" , asp-action="AddOrDeleteLike">
+            <input class="submit-btn" type="submit" value="Like">
+        </form>
         }
     </div>
     <div>
@@ -34,15 +50,15 @@
         {
             if (i.Measure != null)
             {
-                <div class="ingredient">
-                    <p>@i.Quantity (@i.Measure) of @i.Name</p>
-                </div>
+        <div class="ingredient">
+            <p>@i.Quantity (@i.Measure) of @i.Name</p>
+        </div>
             }
             else
             {
-                <div class="ingredient">
-                    <p>@i.Quantity @i.Name</p>
-                </div>
+        <div class="ingredient">
+            <p>@i.Quantity @i.Name</p>
+        </div>
             }
         }
         <h2>Instructions:</h2>
@@ -54,34 +70,34 @@
             <div class="comment">
                 @using (Html.BeginForm("AddComment", "Recipes", new { recipeId = Model.Id }))
                 {
-                    <form asp-controller="Recipes" , asp-action="AddComment">
-                        <label for="fname">Add comment:</label>
-                        <input type="text" name="comment" value="">
-                        <input type="submit" value="Submit">
-                    </form>
+                <form asp-controller="Recipes" , asp-action="AddComment">
+                    <label for="fname">Add comment:</label>
+                    <input type="text" name="comment" value="">
+                    <input class="submit-btn" type="submit" value="Submit">
+                </form>
                 }
             </div>
         </div>
-        
+
         @foreach (var comment in @Model.Comments)
         {
-            <div class="comment">
-                <div class="inline">
-                    <h5>@comment.User?.UserName</h5>
-                    <p>@comment.Text</p>
-                    <time>@comment.Time</time>
-                </div>
-                <div class="inline">
-                    @if (comment.User?.Id == ViewBag.CurrentUserId){
+        <div class="comment">
+            <div class="inline">
+                <h5>@comment.User?.UserName</h5>
+                <p>@comment.Text</p>
+                <time>@comment.Time</time>
+            </div>
+            <div class="inline">
+                @if (comment.User?.Id == ViewBag.CurrentUserId){
                         using (Html.BeginForm("DeleteComment", "Recipes", new { commentId = comment.Id, recipeId = Model.Id }))
                         {
-                            <form asp-controller="Recipes" , asp-action="DeleteComment">
-                                <input type="submit" value="Delete">
-                            </form>
+                <form asp-controller="Recipes" , asp-action="DeleteComment">
+                    <input class="delete-btn" type="submit" value="Delete">
+                </form>
                         }
                     }
-                </div>
             </div>
+        </div>
         }
     </div>
 </div>

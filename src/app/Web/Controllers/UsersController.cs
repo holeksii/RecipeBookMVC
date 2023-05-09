@@ -15,6 +15,7 @@ public class UsersController : Controller
         _contextService = contextService;
     }
 
+    [Authorize]
     [HttpGet("{id}")]
     public ActionResult UserInfo(string id)
     {

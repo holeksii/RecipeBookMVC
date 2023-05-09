@@ -3,12 +3,19 @@
 <h2>Create Recipe</h2>
 <h3>Select Category:</h3>
 
+@if (ViewBag.CategoryAdded == true)
+{
+    <div class="alert alert-success">
+        <p>Category was successfully added. Choose it now from list</p>
+    </div>
+}
+
 @using (Html.BeginForm("AddNewCategory", "Recipes"))
 {
     <form asp-controller="Recipes" , asp-action="AddNewCategory">
         <label for="fname">No matching category in this list? Add your own:</label>
         <input type="text" name="name" value="">
-        <input type="submit" value="Add category to list">
+        <input class="view-btn" type="submit" value="Add category to list">
     </form>
 }
 
@@ -17,6 +24,7 @@
     <div class="form-group">
         @Html.DropDownListFor(m => m.CategoryId, new SelectList(ViewBag.Categories, "Id", "Name"), "Select Category", new { @id= "Category.Name", data_live_search = "true" })
     </div>
+    <h3>Enter other data:</h3>
     <div class="form-group">
         @Html.LabelFor(m => m.Name)
         @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })

@@ -30,6 +30,7 @@ public class RecipeDTO
         model.User = recipe.User;
         model.LikesCount = recipe.Likes.Count;
         model.CommentsCount = recipe.Comments.Count;
+        model.TimeToCook = recipe.TimeToCook;
         return model;
     }
 }

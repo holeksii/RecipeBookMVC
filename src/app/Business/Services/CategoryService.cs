@@ -26,14 +26,13 @@ public class CategoryService : ICategoryService
         return _mapper.Map<CategoryDTO>(category);
     }
 
-    public List<Category> GetAll()
+    public List<CategoryDTO> GetAll()
     {
-        /*var categories = _repository.GetAll();
+        var categories = _repository.GetAll();
         if (categories != null)
         {
             return _mapper.Map<List<Category>, List<CategoryDTO>>(categories);
         }
-        return null;*/
-        return _repository.GetAll();
+        return null;
     }
 }

@@ -6,5 +6,6 @@ using Business.Models;
 public interface ICategoryService
 {
     public CategoryDTO? AddNewCategory(string name);
-    public List<Category> GetAll();
+
+    public List<CategoryDTO> GetAll();
 }

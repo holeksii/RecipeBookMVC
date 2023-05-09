@@ -35,6 +35,7 @@ public class RecipesController : Controller
         return View("Recipes", _recipeService.GetRecipesSortedBy(sortingField, list!));
     }
 
+    [Authorize]
     [HttpGet("UserRecipes/{id}")]
     public IActionResult UserRecipes(string id, string sortingField = "")
     {
@@ -57,7 +58,7 @@ public class RecipesController : Controller
     {
         string _currentId = _contextService.GetUserId();
         var list = _recipeService.GetLikedRecipes(_currentId);
-        return View("UserRecipes", _recipeService.GetRecipesSortedBy(sortingField, list!));
+        return View("LikedRecipes", _recipeService.GetRecipesSortedBy(sortingField, list!));
     }
 
     [Authorize]
@@ -74,6 +75,7 @@ public class RecipesController : Controller
         _recipeService.DeleteRecipe(recipeId);
         string _currentId = _contextService.GetUserId();
         var list = _recipeService.GetUserRecipes(_currentId);
+        ViewBag.RecipeDeleted = true;
         return View("MyRecipes", list);
     }
 
@@ -90,8 +92,6 @@ public class RecipesController : Controller
     public IActionResult CreateRecipe()
     {
         ViewBag.Categories = _categoryService.GetAll();
-        /*var recipe = new RecipeDetailsDTO();
-        return View("CreateRecipeCategory", recipe);*/
         return View("CreateRecipe");
     }
 
@@ -109,6 +109,7 @@ public class RecipesController : Controller
     public IActionResult AddNewCategory(string name)
     {
         CategoryDTO category = _categoryService.AddNewCategory(name);
+        ViewBag.CategoryAdded = true;
         ViewBag.Categories = _categoryService.GetAll();
         return View("CreateRecipe");
     }
@@ -141,10 +142,17 @@ public class RecipesController : Controller
         string _currentId = _contextService.GetUserId();
         if (!_likeService.AddLike(_currentId, recipeId))
         {
-            _likeService.DeleteLike(_currentId, recipeId);
+            if(_likeService.DeleteLike(_currentId, recipeId))
+            {
+                ViewBag.LikeDeleted = true;
+            }
+        }
+        else
+        {
+            ViewBag.LikeAdded = true;
         }
         var recipe = _recipeService.GetRecipe(recipeId);
-        ViewBag.CurrentUserId = _contextService.GetUserId();
+        ViewBag.CurrentUserId = _currentId;
         return View("Recipe", recipe);
     }
 }

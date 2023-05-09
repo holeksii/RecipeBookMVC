@@ -19,6 +19,7 @@ public class RecipeRepository : EfCoreRepository<Recipe, DatabaseContext>
             .Include(r => r.Likes)
             .Include(r => r.Category)
             .Include(r => r.User)
+            .Include(r => r.Comments)
             .ToList();
     }
 
@@ -29,6 +30,7 @@ public class RecipeRepository : EfCoreRepository<Recipe, DatabaseContext>
             .Include(r => r.Likes)
             .Include(r => r.Category)
             .Include(r => r.User)
+            .Include(r => r.Comments)
             .ToList();
     }
 
@@ -46,6 +48,7 @@ public class RecipeRepository : EfCoreRepository<Recipe, DatabaseContext>
             .Include(r => r.Likes)
             .Include(r => r.Category)
             .Include(r => r.User)
+            .Include(r => r.Comments)
             .ToList();
     }
 

@@ -64,6 +64,27 @@ img {
     padding-inline: 10px;
 }
 
+.submit-btn {
+    border-color: #41644A;
+    border-radius: 5px;
+    background: #CDF2CA;
+    color: #263A29;
+    margin: 5px;
+}
+
+.delete-btn {
+    border-color: #E06469;
+    border-radius: 5px;
+    background: #FFCAC8;
+    color: #E06469;
+    margin: 5px;
+}
+
+.view-btn {
+    border-radius: 10px;
+
+}
+
 .inline {
     display: inline-block;
 }
