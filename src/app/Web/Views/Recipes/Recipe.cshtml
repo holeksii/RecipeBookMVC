@@ -66,9 +66,21 @@
         @foreach (var comment in @Model.Comments)
         {
             <div class="comment">
-                <h5>@comment.User?.UserName</h5>
-                <p>@comment.Text</p>
-                <time>@comment.Time</time>
+                <div class="inline">
+                    <h5>@comment.User?.UserName</h5>
+                    <p>@comment.Text</p>
+                    <time>@comment.Time</time>
+                </div>
+                <div class="inline">
+                    @if (comment.User?.Id == ViewBag.CurrentUserId){
+                        using (Html.BeginForm("DeleteComment", "Recipes", new { commentId = comment.Id, recipeId = Model.Id }))
+                        {
+                            <form asp-controller="Recipes" , asp-action="DeleteComment">
+                                <input type="submit" value="Delete">
+                            </form>
+                        }
+                    }
+                </div>
             </div>
         }
     </div>

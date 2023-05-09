@@ -17,4 +17,9 @@ public class CommentService : ICommentService
         Comment comment = new(commentText, DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc));
         return _repository.Add(userId, recipeId, comment);
     }
+
+    public void DeleteComment(long recipeId)
+    {
+        _repository.Delete(recipeId);
+    }
 }

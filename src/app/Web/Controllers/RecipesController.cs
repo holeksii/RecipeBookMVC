@@ -60,9 +60,11 @@ public class RecipesController : Controller
         return View("UserRecipes", _recipeService.GetRecipesSortedBy(sortingField, list!));
     }
 
+    [Authorize]
     [HttpGet("Recipe/{id:long}")]
     public IActionResult Recipe(long id)
     {
+        ViewBag.CurrentUserId = _contextService.GetUserId();
         return View("Recipe", _recipeService.GetRecipe(id));
     }
 
@@ -73,6 +75,14 @@ public class RecipesController : Controller
         string _currentId = _contextService.GetUserId();
         var list = _recipeService.GetUserRecipes(_currentId);
         return View("MyRecipes", list);
+    }
+
+    [Authorize]
+    public IActionResult DeleteComment(long commentId, long recipeId)
+    {
+        _commentService.DeleteComment(commentId);
+        ViewBag.CurrentUserId = _contextService.GetUserId();
+        return View("Recipe", _recipeService.GetRecipe(recipeId));
     }
 
     [Authorize]
@@ -120,6 +130,7 @@ public class RecipesController : Controller
         string _currentId = _contextService.GetUserId();
         _commentService.AddComment(_currentId, recipeId, comment);
         var recipe = _recipeService.GetRecipe(recipeId);
+        ViewBag.CurrentUserId = _contextService.GetUserId();
         return View("Recipe", recipe);
     }
 
@@ -133,6 +144,7 @@ public class RecipesController : Controller
             _likeService.DeleteLike(_currentId, recipeId);
         }
         var recipe = _recipeService.GetRecipe(recipeId);
+        ViewBag.CurrentUserId = _contextService.GetUserId();
         return View("Recipe", recipe);
     }
 }

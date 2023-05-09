@@ -2,6 +2,7 @@
 
 using Microsoft.AspNetCore.Mvc;
 using Business.Services;
+using Microsoft.AspNetCore.Authorization;
 
 public class UsersController : Controller
 {
@@ -20,6 +21,7 @@ public class UsersController : Controller
         return View("UserInfo", _userService.GetUser(id));
     }
 
+    [Authorize]
     [HttpGet("MyAccount")]
     public ActionResult MyAccount()
     {
