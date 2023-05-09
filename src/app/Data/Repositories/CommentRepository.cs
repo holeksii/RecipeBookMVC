@@ -12,7 +12,7 @@ public class CommentRepository : EfCoreRepository<Comment, DatabaseContext>
         _context = context;
     }
 
-    public virtual Comment? Add(string userId, long recipeId, Comment comment)
+    public virtual Comment? Add(string uid, long recipeId, Comment comment)
     {
         var recipe = _context.Find<Recipe>(recipeId);
         if (recipe == null)
@@ -20,7 +20,7 @@ public class CommentRepository : EfCoreRepository<Comment, DatabaseContext>
             return null;
         }
 
-        var user = _context.Find<User>(userId);
+        var user = _context.Find<User>(uid);
         if (user == null)
         {
             return null;

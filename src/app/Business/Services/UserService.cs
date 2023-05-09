@@ -13,7 +13,7 @@ public class UserService : IUserService
     public UserService(UserRepository userRepository)
     {
         _repository = userRepository;
-        var configuration = new MapperConfiguration(cfg => cfg.CreateMap<User, UserDTO>().ConvertUsing(u => UserDTO.mapUser(u)));
+        var configuration = new MapperConfiguration(cfg => cfg.CreateMap<User, UserDTO>().ConvertUsing(u => UserDTO.MapUser(u)));
         _mapper = new Mapper(configuration);
     }
 

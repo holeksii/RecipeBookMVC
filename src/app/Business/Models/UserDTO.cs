@@ -23,15 +23,16 @@ public class UserDTO
 
     public int CommentsCount { get; set; }
 
-    public static UserDTO mapUser(User user)
+    public static UserDTO MapUser(User user)
     {
-        UserDTO model = new UserDTO();
-        model.Id = user.Id;
-        model.UserName = user.UserName;
-        model.Email = user.Email;
-        model.ImageUrl = user.ImageUrl;
-        model.RecipesCount = user.Recipes.Count;
-        model.CommentsCount = user.Comments.Count;
-        return model;
+        return new UserDTO ()
+        {
+            Id = user.Id,
+            UserName = user.UserName,
+            Email = user.Email,
+            ImageUrl = user.ImageUrl,
+            RecipesCount = user.Recipes.Count,
+            CommentsCount = user.Comments.Count
+        };
     }
 }

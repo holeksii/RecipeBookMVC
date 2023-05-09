@@ -22,7 +22,7 @@ public class RecipeDTO
 
     public static RecipeDTO mapRecipe(Recipe recipe)
     {
-        RecipeDTO model = new RecipeDTO();
+        var model = new RecipeDTO();
         model.Id = recipe.Id;
         model.Name = recipe.Name;
         model.ImageUrl = recipe.ImageUrl;
