@@ -2,7 +2,7 @@
 
 using Data.Repositories;
 using Data.Models;
-using Business.Models;
+using Models;
 using AutoMapper;
 
 public class RecipeService : IRecipeService
@@ -14,42 +14,32 @@ public class RecipeService : IRecipeService
     {
         _repository = recipeRepository;
         var configuration = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<Recipe, RecipeDetailsDTO>().ConstructUsing(r => RecipeDetailsDTO.mapRecipe(r));
-                cfg.CreateMap<Recipe, RecipeDTO>().ConvertUsing(r => RecipeDTO.mapRecipe(r));
-                cfg.CreateMap<RecipeDetailsDTO, Recipe>().ConstructUsing(rdto => RecipeDetailsDTO.mapRecipeDetailsDTO(rdto));
-            });
+        {
+            cfg.CreateMap<Recipe, RecipeDetailsDTO>()
+                .ConstructUsing(r => RecipeDetailsDTO.mapRecipe(r));
+            cfg.CreateMap<Recipe, RecipeDTO>().ConvertUsing(r => RecipeDTO.mapRecipe(r));
+            cfg.CreateMap<RecipeDetailsDTO, Recipe>()
+                .ConstructUsing(rdto => RecipeDetailsDTO.mapRecipeDetailsDTO(rdto));
+        });
         _mapper = new Mapper(configuration);
     }
 
     public List<RecipeDTO>? GetAllRecipes()
     {
         var recipes = _repository.GetAll();
-        if (recipes != null)
-        {
-            return _mapper.Map<List<Recipe> ,List<RecipeDTO>>(recipes);
-        }
-        return null;
+        return recipes is not null ? _mapper.Map<List<Recipe>, List<RecipeDTO>>(recipes) : null;
     }
 
     public List<RecipeDTO>? GetUserRecipes(string id)
     {
         var recipes = _repository.GetUserRecipes(id);
-        if (recipes != null)
-        {
-            return _mapper.Map<List<Recipe>, List<RecipeDTO>>(recipes);
-        }
-        return null;
+        return recipes is not null ? _mapper.Map<List<Recipe>, List<RecipeDTO>>(recipes) : null;
     }
 
     public List<RecipeDTO>? GetLikedRecipes(string id)
     {
         var recipes = _repository.GetUserLikedRecipes(id);
-        if (recipes != null)
-        {
-            return _mapper.Map<List<Recipe>, List<RecipeDTO>>(recipes);
-        }
-        return null;
+        return _mapper.Map<List<Recipe>, List<RecipeDTO>>(recipes);
     }
 
     public List<RecipeDTO>? GetRecipesSortedBy(string field, List<RecipeDTO> list)
@@ -66,11 +56,7 @@ public class RecipeService : IRecipeService
     public RecipeDetailsDTO? GetRecipe(long id)
     {
         var recipe = _repository.Get(id);
-        if (recipe != null)
-        {
-            return _mapper.Map<RecipeDetailsDTO>(recipe);
-        }
-        return null;
+        return recipe is not null ? _mapper.Map<RecipeDetailsDTO>(recipe) : null;
     }
 
     public void DeleteRecipe(long id)
@@ -82,10 +68,6 @@ public class RecipeService : IRecipeService
     {
         Recipe recipe = _mapper.Map<Recipe>(recipeDTO);
         recipe = _repository.Add(userId, categoryId, recipe);
-        if(recipe != null)
-        {
-            return _mapper.Map<RecipeDetailsDTO>(recipe);
-        }
-        return null;
+        return recipe is not null ? _mapper.Map<RecipeDetailsDTO>(recipe) : null;
     }
 }

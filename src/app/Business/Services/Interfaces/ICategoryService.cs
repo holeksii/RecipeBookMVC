@@ -7,5 +7,5 @@ public interface ICategoryService
 {
     public CategoryDTO? AddNewCategory(string name);
 
-    public List<CategoryDTO> GetAll();
+    public List<CategoryDTO>? GetAll();
 }

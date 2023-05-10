@@ -13,17 +13,14 @@ public class UserService : IUserService
     public UserService(UserRepository userRepository)
     {
         _repository = userRepository;
-        var configuration = new MapperConfiguration(cfg => cfg.CreateMap<User, UserDTO>().ConvertUsing(u => UserDTO.MapUser(u)));
+        var configuration = new MapperConfiguration(cfg =>
+            cfg.CreateMap<User, UserDTO>().ConvertUsing(u => UserDTO.MapUser(u)));
         _mapper = new Mapper(configuration);
     }
 
     public UserDTO? GetUser(string id)
     {
         var user = _repository.Get(id);
-        if (user != null)
-        {
-            return _mapper.Map<UserDTO>(user);
-        }
-        return null;
+        return user is not null ? _mapper.Map<UserDTO>(user) : null;
     }
 }

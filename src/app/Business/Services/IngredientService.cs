@@ -14,7 +14,7 @@ public class IngredientService : IIngredientService
 
     public Ingredient? AddIngredient(long recipeId, string name, int quantity, string measure)
     {
-        Ingredient ingredient = new Ingredient(name, quantity, measure);
+        Ingredient ingredient = new(name, quantity, measure);
         return _repository.Add(recipeId, ingredient);
     }
 }

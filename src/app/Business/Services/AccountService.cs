@@ -13,10 +13,10 @@ public class AccountService : IAccountService
     private readonly IEmailService _emailService;
     private readonly IConfiguration _configuration;
 
-    public AccountService(UserManager<User> userMenager, SignInManager<User> signInManager,
+    public AccountService(UserManager<User> userManager, SignInManager<User> signInManager,
         IEmailService emailService, IConfiguration configuration)
     {
-        _userManager = userMenager;
+        _userManager = userManager;
         _signInManager = signInManager;
         _emailService = emailService;
         _configuration = configuration;
@@ -30,13 +30,15 @@ public class AccountService : IAccountService
             UserName = userModel.UserName,
         };
         var result = await _userManager.CreateAsync(user, userModel.Password);
-        if (result.Succeeded)
+        if (!result.Succeeded)
         {
-            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            if(!string.IsNullOrEmpty(token))
-            {
-                await SendConfirmationEmailAsync(user, token);
-            }
+            return result;
+        }
+
+        var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+        if(!string.IsNullOrEmpty(token))
+        {
+            await SendConfirmationEmailAsync(user, token);
         }
         return result;
     }
@@ -57,8 +59,8 @@ public class AccountService : IAccountService
         string link = _configuration.GetSection("Application:EmailConfirmationPath").Value;
         var placeHolders = new List<KeyValuePair<string, string>>()
         {
-            new KeyValuePair<string, string>("{{UserName}}",user.UserName),
-            new KeyValuePair<string, string>("{{token}}", string.Format(appDomain + link, user.Id, token))
+            new ("{{UserName}}",user.UserName),
+            new ("{{token}}", string.Format(appDomain + link, user.Id, token))
         };
         await _emailService.SendEmail("RecipeBook email confirmation", user.Email,
             "SignUpEmailTemplate", placeHolders);
@@ -75,8 +77,8 @@ public class AccountService : IAccountService
         string link = _configuration.GetSection("Application:PasswordResetPath").Value;
         var placeHolders = new List<KeyValuePair<string, string>>()
         {
-            new KeyValuePair<string, string>("{{UserName}}",user.UserName),
-            new KeyValuePair<string, string>("{{token}}", string.Format(appDomain + link, user.Id, token))
+            new ("{{UserName}}",user.UserName),
+            new ("{{token}}", string.Format(appDomain + link, user.Id, token))
         };
         await _emailService.SendEmail("RecipeBook password reset", user.Email,
             "ForgotPasswordTemplate", placeHolders);

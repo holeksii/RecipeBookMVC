@@ -13,9 +13,10 @@ public class CategoryService : ICategoryService
     public CategoryService(CategoryRepository categoryRepository)
     {
         _repository = categoryRepository;
-        var configuration = new MapperConfiguration( cfg => {
-        cfg.CreateMap<Category, CategoryDTO>();
-        cfg.CreateMap<CategoryDTO, Category>();
+        var configuration = new MapperConfiguration(cfg =>
+        {
+            cfg.CreateMap<Category, CategoryDTO>();
+            cfg.CreateMap<CategoryDTO, Category>();
         });
         _mapper = new Mapper(configuration);
     }
@@ -26,13 +27,11 @@ public class CategoryService : ICategoryService
         return _mapper.Map<CategoryDTO>(category);
     }
 
-    public List<CategoryDTO> GetAll()
+    public List<CategoryDTO>? GetAll()
     {
         var categories = _repository.GetAll();
-        if (categories != null)
-        {
-            return _mapper.Map<List<Category>, List<CategoryDTO>>(categories);
-        }
-        return null;
+        return categories is not null
+            ? _mapper.Map<List<Category>, List<CategoryDTO>>(categories)
+            : null;
     }
 }

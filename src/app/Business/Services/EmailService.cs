@@ -22,8 +22,8 @@ public class EmailService : IEmailService
     public async Task SendEmail(string subject, string toEmail,
         string templateName, List<KeyValuePair<string, string>> placeHolders)
     {
-        string template = string.Format(_templatePath, templateName);
-        EmailOptions emailOptions = new EmailOptions
+        var template = string.Format(_templatePath, templateName);
+        EmailOptions emailOptions = new()
         {
             Subject = subject,
             Body = UpdatePlaceHolders(GetEmailBody(template), placeHolders),
@@ -39,7 +39,7 @@ public class EmailService : IEmailService
             Credentials = new NetworkCredential(_smtpConfig.UserName, _smtpConfig.Password),
             EnableSsl = _smtpConfig.EnableSSL
         };
-        MailMessage mail = new MailMessage
+        MailMessage mail = new()
         {
             Subject = emailOptions.Subject,
             Body = emailOptions.Body,
@@ -57,16 +57,17 @@ public class EmailService : IEmailService
 
     private string UpdatePlaceHolders(string text, List<KeyValuePair<string, string>> placeHolders)
     {
-        if(!string.IsNullOrEmpty(text) && placeHolders != null)
+        if (string.IsNullOrEmpty(text))
         {
-            foreach(var placeHolder in placeHolders)
-            {
-                if(text.Contains(placeHolder.Key))
-                {
-                    text = text.Replace(placeHolder.Key, placeHolder.Value);
-                }
-            }
+            return text;
         }
+
+        foreach (var placeHolder in placeHolders.Where(
+                     placeHolder => text.Contains(placeHolder.Key)))
+        {
+            text = text.Replace(placeHolder.Key, placeHolder.Value);
+        }
+
         return text;
     }
 }
