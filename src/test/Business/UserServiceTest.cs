@@ -1,42 +1,43 @@
+using RecipeBookTest.Business.Proxy;
+
 namespace RecipeBookTest.Business;
 
 using Moq;
-using RecipeBook.Data.Repositories;
 using RecipeBook.Data.Models;
 using RecipeBook.Business.Services;
 
 public sealed class UserServiceTest
 {
-    readonly Mock<UserRepository> userRepositoryMock;
-    readonly UserService userService;
+    readonly Mock<UserRepositoryMoqProxy> _userRepositoryMock;
+    readonly UserService _userService;
 
     public UserServiceTest()
     {
-        userRepositoryMock = new Mock<UserRepository>();
+        _userRepositoryMock = new Mock<UserRepositoryMoqProxy>();
         InitMockMethods();
-        userService = new(userRepositoryMock.Object);
+        _userService = new(_userRepositoryMock.Object);
     }
 
     void InitMockMethods()
     {
-        userRepositoryMock.Setup(r =>
-                r.Get(It.IsAny<long>())).Returns
-                (
-                    User.CreateBuilder()
-                    .SetUsername("Username")
-                    .SetPassword("Password")
-                    .SetEmail("Email")
-                    .Build()
-                );
+        _userRepositoryMock.Setup(r =>
+            r.Get(It.IsAny<long>())).Returns
+        (
+            new User
+            {
+                UserName = "Username",
+                Email = "Email"
+            }
+        );
     }
 
     [Fact]
     public void TestGetUser()
     {
-        var user = userService.GetUser(1);
+        var user = _userService.GetUser("1");
         Assert.NotNull(user);
-        Assert.Equal("Username", user?.Username);
-        Assert.Equal("Password", user?.Password);
+        Assert.Equal("Username", user?.UserName);
+        Assert.Equal("Password", user?.UserName);
         Assert.Equal("Email", user?.Email);
     }
 }
