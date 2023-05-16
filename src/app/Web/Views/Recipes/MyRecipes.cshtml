@@ -1,0 +1,63 @@
+﻿@model IEnumerable<RecipeDTO>
+@{
+    ViewData["Title"] = "MyRecipes";
+}
+
+@if (ViewBag.RecipeDeleted == true)
+{
+    <div class="alert alert-danger">
+        <p>Recipe was successfully deleted</p>
+    </div>
+}
+
+
+@using (Html.BeginForm("MyRecipes", "Recipes", FormMethod.Get))
+{
+    <div>
+        <h3>Sort by:</h3>
+        <form asp-controller="Recipes" , asp-action="MyRecipes">
+            <ul>
+                <li>
+                    <label for="fname">Likes number:</label>
+                    <input type="checkbox" name="sortingField" value="Likes">
+                </li>
+                <li>
+                    <label for="fname">Comments number:</label>
+                    <input type="checkbox" name="sortingField" value="Comments">
+                </li>
+                <li>
+                    <label for="fname">Time needed:</label>
+                    <input type="checkbox" name="sortingField" value="Time">
+                </li>
+            </ul>
+            <input type="submit" value="Sort">
+        </form>
+    </div>
+}
+
+@foreach (var item in @Model)
+{
+    <div class="recipe">
+        <div class="inline">
+            <img src=@item.ImageUrl alt="image" width="300">
+        </div>
+        <div class="inline">
+            <h2>@item.Name</h2>
+            <p>@item.LikesCount likes, @item.CommentsCount comments</p>
+            <p>Created by <b>@item.User?.UserName</b></p>
+            <h5>@item.Category</h5>
+            <p>@item.TimeToCook min needed</p>
+        </div>
+        <div class="inline">
+            <button class="view-btn">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Recipes" asp-action="Recipe" asp-route-id="@item.Id">View details</a>
+            </button>
+            @using (Html.BeginForm("DeleteRecipe", "Recipes", new { recipeId = @item.Id }))
+            {
+                <form asp-controller="Recipes" , asp-action="DeleteRecipe">
+                    <input class="delete-btn" type="submit" value="Delete">
+                </form>
+            }
+        </div>
+    </div>
+}

@@ -1,0 +1,18 @@
+@model UserDTO
+@{
+    ViewData["Title"] = "UserInfo";
+}
+<h1>@Model.UserName</h1>
+<div>
+<div class="inline">
+    <img src=@Model.ImageUrl alt="image here" width="300" />
+</div>
+<div class="inline">
+    <h3>Recipes: @Model.RecipesCount</h3>
+    <h3>Comments: @Model.CommentsCount</h3>
+    <h3>Email: @Model.Email</h3>
+</div>
+</div>
+<button class="view-btn">
+    <a class="nav-link text-dark" asp-area="" asp-controller="Recipes" asp-action="UserRecipes" asp-route-id="@Model.Id">View recipes created by this author</a>
+</button>

@@ -1,0 +1,44 @@
+@model LoginUserModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="container">
+    <h2>Login</h2>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-controller="Account" , method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="UserName" class="control-label"></label>
+                    <input asp-for="UserName" class="form-control" />
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password" class="control-label"></label>
+                    <input asp-for="Password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group form-check">
+                    <label asp-for="RememberMe" class="form-check-label"></label>
+                    <input asp-for="RememberMe" class="form-check-input" />
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Login" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-controller="Account" asp-action="ForgotPassword">Forgot password?</a>
+    </div>
+    <div>
+        <p>
+            Do not have any account yet?
+            <a asp-controller="Account" asp-action="SignUp">Sign up here</a>
+        </p>
+    </div>
+</div>
