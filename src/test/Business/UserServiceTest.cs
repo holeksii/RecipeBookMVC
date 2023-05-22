@@ -35,7 +35,7 @@ public sealed class UserServiceTest
     }
 
     [Fact]
-    public void GetUser_ReturnsTestUser()
+    public void GetUser_ValidUid_ReturnsTestUser()
     {
         var user = _userService.GetUser("1");
         Assert.NotNull(user);
@@ -45,7 +45,7 @@ public sealed class UserServiceTest
     }
 
     [Fact]
-    public void GetUser_ReturnsNull()
+    public void GetUser_WrongUid_ReturnsNull()
     {
         var user = _userService.GetUser("-1");
         Assert.Null(user);

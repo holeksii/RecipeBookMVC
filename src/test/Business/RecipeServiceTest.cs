@@ -135,13 +135,34 @@ public sealed class RecipeServiceTest
     }
 
     [Fact]
-    public void GetRecipesSortedBy_ReturnsList()
+    public void GetRecipesSortedByLikes_ReturnsList()
     {
         var recipes = _recipeService.GetRecipesSortedBy("Likes", _recipeService.GetAllRecipes()!);
         Assert.Equal("Recipe 1", recipes?[0].Name);
         Assert.Equal("Recipe 2", recipes?[1].Name);
         Assert.Equal("Recipe 3", recipes?[2].Name);
     }
+
+    [Fact]
+    public void GetRecipesSortedByLComments_ReturnsList()
+    {
+        var recipes =
+            _recipeService.GetRecipesSortedBy("Comments", _recipeService.GetAllRecipes()!);
+        Assert.Equal("Recipe 1", recipes?[0].Name);
+        Assert.Equal("Recipe 2", recipes?[1].Name);
+        Assert.Equal("Recipe 3", recipes?[2].Name);
+    }
+
+    [Fact]
+    public void GetRecipesSortedByTimeToCook_ReturnsList()
+    {
+        var recipes =
+            _recipeService.GetRecipesSortedBy("TimeToCook", _recipeService.GetAllRecipes()!);
+        Assert.Equal("Recipe 1", recipes?[0].Name);
+        Assert.Equal("Recipe 2", recipes?[1].Name);
+        Assert.Equal("Recipe 3", recipes?[2].Name);
+    }
+    
 
     [Fact]
     public void GetRecipe_ReturnsRecipe1()

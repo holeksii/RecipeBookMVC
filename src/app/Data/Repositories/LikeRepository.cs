@@ -13,7 +13,7 @@ public class LikeRepository : EfCoreRepository<Like, DatabaseContext>
         _context = context;
     }
 
-    public Like? GetPreviousLike(string userId, long recipeId)
+    public virtual Like? GetPreviousLike(string userId, long recipeId)
     {
         return _context.Set<Like>().Include(l => l.User).Include(l => l.Recipe).FirstOrDefault(l => l.User!.Id == userId && l.Recipe!.Id == recipeId);
     }

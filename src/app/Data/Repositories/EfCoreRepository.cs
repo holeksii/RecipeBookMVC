@@ -14,14 +14,14 @@ public abstract class EfCoreRepository<TEntity, TContext> : IRepository<TEntity>
         _context = context;
     }
 
-    public TEntity? Add(TEntity entity)
+    public virtual TEntity? Add(TEntity entity)
     {
         _context.Set<TEntity>().Add(entity);
         _context.SaveChanges();
         return entity;
     }
 
-    public TEntity? Delete(long id)
+    public virtual TEntity? Delete(long id)
     {
         var entity = _context.Set<TEntity>().Find(id);
         if (entity == null)
