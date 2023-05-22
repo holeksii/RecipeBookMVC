@@ -30,9 +30,8 @@ public sealed class CommentServiceTest
 
     void InitMockMethods()
     {
-        // if Add method takes "1", 1L, It.IsAny<Comment>() - then return null
-        // if any other parameters - then return _testComment
-        _commentRepositoryMock.Setup(r => r.Add("1", 1L, It.IsAny<Comment>()))
+        _commentRepositoryMock
+            .Setup(r => r.Add(It.IsAny<string>(), It.IsAny<long>(), It.IsAny<Comment>()))
             .Returns((string uid, long recipeId, Comment comment) =>
                 uid == _wrongUserId || recipeId == _wrongRecipeId
                     ? null
@@ -47,12 +46,13 @@ public sealed class CommentServiceTest
         Assert.Equal("Test", comment?.Text);
         Assert.Equal(_testTime, comment?.Time);
     }
-    
+
     [Fact]
     public void AddComment_ReturnsNull()
     {
         var comment = _commentService.AddComment(_wrongUserId, _wrongRecipeId, "Test");
-        _commentRepositoryMock.Verify(r => r.Add(_wrongUserId, _wrongRecipeId, It.IsAny<Comment>()));
+        _commentRepositoryMock.Verify(r =>
+            r.Add(_wrongUserId, _wrongRecipeId, It.IsAny<Comment>()));
         Assert.Null(comment);
     }
 }
