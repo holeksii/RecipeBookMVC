@@ -36,7 +36,7 @@ public class RecipeService : IRecipeService
         return recipes is not null ? _mapper.Map<List<Recipe>, List<RecipeDTO>>(recipes) : null;
     }
 
-    public List<RecipeDTO>? GetLikedRecipes(string id)
+    public List<RecipeDTO> GetLikedRecipes(string id)
     {
         var recipes = _repository.GetUserLikedRecipes(id);
         return _mapper.Map<List<Recipe>, List<RecipeDTO>>(recipes);
@@ -53,20 +53,20 @@ public class RecipeService : IRecipeService
         };
     }
 
-    public RecipeDetailsDTO? GetRecipe(long id)
+    public RecipeDetailsDTO? GetRecipe(long recipeId)
     {
-        var recipe = _repository.Get(id);
+        var recipe = _repository.Get(recipeId);
         return recipe is not null ? _mapper.Map<RecipeDetailsDTO>(recipe) : null;
     }
 
-    public void DeleteRecipe(long id)
+    public void DeleteRecipe(long recipeId)
     {
-        _repository.Delete(id);
+        _repository.Delete(recipeId);
     }
 
     public RecipeDetailsDTO? AddRecipe(string userId, long categoryId, RecipeDetailsDTO recipeDTO)
     {
-        Recipe recipe = _mapper.Map<Recipe>(recipeDTO);
+        var recipe = _mapper.Map<Recipe>(recipeDTO);
         recipe = _repository.Add(userId, categoryId, recipe);
         return recipe is not null ? _mapper.Map<RecipeDetailsDTO>(recipe) : null;
     }

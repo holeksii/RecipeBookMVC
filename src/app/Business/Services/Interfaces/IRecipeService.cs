@@ -13,9 +13,9 @@ public interface IRecipeService
 
     List<RecipeDTO>? GetRecipesSortedBy(string field, List<RecipeDTO> list);
 
-    RecipeDetailsDTO? GetRecipe(long id);
+    RecipeDetailsDTO? GetRecipe(long recipeId);
 
-    void DeleteRecipe(long id);
+    void DeleteRecipe(long recipeId);
 
     RecipeDetailsDTO? AddRecipe(string userId, long categoryId, RecipeDetailsDTO recipeDTO);
 }
