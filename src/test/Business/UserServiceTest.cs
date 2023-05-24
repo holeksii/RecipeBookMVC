@@ -11,6 +11,13 @@ public sealed class UserServiceTest
     readonly Mock<UserRepositoryMoqProxy> _userRepositoryMock;
     readonly UserService _userService;
 
+    readonly User _testUser = new()
+    {
+        UserName = "Username",
+        Email = "Email",
+        ImageUrl = "ImageUrl",
+    };
+
     public UserServiceTest()
     {
         _userRepositoryMock = new Mock<UserRepositoryMoqProxy>();
@@ -21,23 +28,26 @@ public sealed class UserServiceTest
     void InitMockMethods()
     {
         _userRepositoryMock.Setup(r =>
-            r.Get(It.IsAny<long>())).Returns
+            r.Get(It.IsAny<string>())).Returns
         (
-            new User
-            {
-                UserName = "Username",
-                Email = "Email"
-            }
+            (string id) => id == "-1" ? null : _testUser
         );
     }
 
     [Fact]
-    public void TestGetUser()
+    public void GetUser_ValidUid_ReturnsTestUser()
     {
         var user = _userService.GetUser("1");
         Assert.NotNull(user);
         Assert.Equal("Username", user?.UserName);
-        Assert.Equal("Password", user?.UserName);
         Assert.Equal("Email", user?.Email);
+        Assert.Equal("ImageUrl", user?.ImageUrl);
+    }
+
+    [Fact]
+    public void GetUser_WrongUid_ReturnsNull()
+    {
+        var user = _userService.GetUser("-1");
+        Assert.Null(user);
     }
 }
